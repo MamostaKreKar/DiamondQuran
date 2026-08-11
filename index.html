@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پڕۆژەی قورئانی پیرۆز</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Noto+Neskh+Arabic&display=swap" rel="stylesheet">
+    <style>
+        /* رێکخستنی بنەڕەتی */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Amiri', 'Noto Neskh Arabic', Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: #0b2416; /* ڕەنگی سەوزی تێری ئیسلامی */
+            color: #f4ebd0; /* ڕەنگی کرێمی/زێڕینی کاڵ بۆ دەقەکان */
+            overflow-x: hidden;
+        }
+
+        /* --- بەشی پێشەکی و چاوەڕوانی لەگەڵ دەنگ --- */
+        .welcome-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, #123c24 0%, #05140c 100%);
+            transition: opacity 1s ease-in-out;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .welcome-content {
+            max-width: 600px;
+            padding: 40px;
+            border: 2px solid #d4af37; /* چوارچێوەی زێڕینی ڕەسەن */
+            border-radius: 15px;
+            background-color: rgba(11, 36, 22, 0.9);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .quran-verse {
+            font-size: 1.8rem;
+            color: #d4af37;
+            margin-bottom: 20px;
+            line-height: 2;
+        }
+
+        .instruction {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #a3b899;
+        }
+
+        .timer-box {
+            font-size: 1.5rem;
+            background: #1c4e32;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            border: 1px solid #d4af37;
+            margin-bottom: 20px;
+        }
+
+        #countdown {
+            font-weight: bold;
+            color: #d4af37;
+            font-size: 2rem;
+        }
+
+        .audio-btn {
+            background-color: #d4af37;
+            color: #05140c;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .audio-btn:hover {
+            background-color: #f4ebd0;
+        }
+
+        /* --- بەشی سەرەکی پڕۆژە (Main Content) --- */
+        .main-container {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* هێدەر و ناڤبار */
+        .main-header {
+            background-color: #05140c;
+            border-bottom: 3px solid #d4af37;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            color: #d4af37;
+            font-weight: bold;
+        }
+
+        .main-header nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-header nav ul li {
+            margin-left: 25px;
+        }
+
+        .main-header nav ul li a {
+            color: #f4ebd0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .main-header nav ul li a:hover {
+            color: #d4af37;
+        }
+
+        /* ناوەڕۆکی کارتەکان */
+        .content-wrapper {
+            padding: 40px 50px;
+            flex: 1;
+        }
+
+        .card-section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+            border-right: 5px solid #d4af37;
+            padding-right: 15px;
+        }
+
+        .section-title h2 {
+            color: #d4af37;
+            font-size: 1.8rem;
+        }
+
+        .section-title p {
+            color: #a3b899;
+        }
+
+        /* کارتەکان بە شێوازی Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: #123c24;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: #d4af37;
+        }
+
+        .card h3 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-card {
+            background-color: #d4af37;
+            color: #05140c;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn-card:hover {
+            background-color: #f4ebd0;
+            transform: scale(1.05);
+        }
+
+        /* فووتەر */
+        footer {
+            background-color: #05140c;
+            text-align: center;
+            padding: 20px;
+            color: #a3b899;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* گونجاندن بۆ مۆبایل */
+        @media (max-width: 768px) {
+            .main-header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .main-header nav ul {
+                margin-top: 15px;
+            }
+            .content-wrapper {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- بەشی پێشەکی و چاوەڕوانی لەگەڵ دەنگ -->
+    <div id="welcome-screen" class="welcome-container">
+        <div class="welcome-content">
+            <h2 class="quran-verse">"الَّذِينَ آمَنُوا وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ اللَّهِ ۗ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ"</h2>
+            <p class="instruction">تکایە بۆ ماوەی ٥٠ چرکە گوێبیستی ئەم ئایەتە پیرۆزە بە بۆ چوونە ناو بەرنامەکەوە...</p>
+
+            <!-- فایلی دەنگی ئایەتەکە لە ڕێگەی ئینتەرنێتەوە (سورة الرعد - مشاري العفاسي) -->
+            <audio id="quran-audio" autoplay loop>
+                <source src="https://server8.mp3quran.net/afs/013.mp3" type="audio/mp3">
+            </audio>
+
+            <div class="timer-box">
+                <span id="countdown">50</span> چرکە ماوە
+            </div>
+            
+            <br>
+            <!-- دوگمەی یارمەتیدەر ئەگەر کۆمپیوتەرەکەت ڕێگەی بە کارپێکردنی خۆکار نەدا -->
+            <button onclick="playAudio()" class="audio-btn">🔊 ئەگەر دەنگەکە کار ناکات لێرە کلیک بکە</button>
+        </div>
+    </div>
+
+    <!-- بەشی سەرەکی پڕۆژەکە -->
+    <div id="main-content" class="main-container hidden">
+        <header class="main-header">
+            <div class="logo">🕋 پڕۆژەی قورئانی پیرۆز</div>
+            <nav>
+                <ul>
+                    <li><a href="#quran">قورئانی پیرۆز</a></li>
+                    <li><a href="#reciters">قورئانخوێنەکان</a></li>
+                    <li><a href="#dhikr">زیکرەکان</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- بەشەکانی ناوەڕۆک -->
+        <main class="content-wrapper">
+            
+            <!-- بەشی قورئانی پیرۆز -->
+            <section id="quran" class="card-section">
+                <div class="section-title">
+                    <h2>📖 بەشی قورئانی پیرۆز</h2>
+                    <p>خوێندنەوە و تەفسێری سورەتە پیرۆزەکان</p>
+                </div>
+                <div class="grid-container">
+                    <div class="card"><h3>سورەتی الفاتحة</h3><p>مەککەیی - ٧ ئایەت</p><button class="btn-card">خوێندنەوە</button></div>
+                    <div class="card"><h3>سورەتی البقرة</h3><p>مەدەنەیی - ٢٨٦ ئایەت</p><button class="btn-card">خوێندنەوە</button></div>
+                    <div class="card"><h3>سورەتی آل عمران</h3><p>مەدەنەیی - ٢٠٠ ئایەت</p><button class="btn-card">خوێندنەوە</button></div>
+                </div>
+            </section>
+
+            <!-- بەشی مامۆستایان و قورئانخوێنەکان -->
+            <section id="reciters" class="card-section">
+                <div class="section-title">
+                    <h2>🎙️ مامۆستا و قورئانخوێنەکان</h2>
+                    <p>گوێگرتن لە خۆشترین دەنگەکانی جیهانی ئیسلامی</p>
+                </div>
+                <div class="grid-container">
+                    <div class="card"><h3>شێخ عبدالباسط عبدالصمد</h3><p>ڕیوایەتی حەفس لە عاسم</p><button class="btn-card">گوێگرتن</button></div>
+                    <div class="card"><h3>شێخ مشاري العفاسي</h3><p>تەجویدی قورئانی پیرۆز</p><button class="btn-card">گوێگرتن</button></div>
+                    <div class="card"><h3>مامۆستا ڕێعد الکردي</h3><p>دەنگێکی ئارامبەخش</p><button class="btn-card">گوێگرتن</button></div>
+                </div>
+            </section>
+
+            <!-- بەشی زیکرەکان -->
+            <section id="dhikr" class="card-section">
+                <div class="section-title">
+                    <h2>📿 بەشی زیکرەکان</h2>
+                    <p>زیکرەکانی بەیانیان، ئێواران و دوای نوێژەکان</p>
+                </div>
+                <div class="grid-container">
+                    <div class="card"><h3>زیکرەکانی بەیانیان</h3><p>پارێزگاری موسڵمان</p><button class="btn-card">خوێندنەوە</button></div>
+                    <div class="card"><h3>زیکرەکانی ئێواران</h3><p>ئارامی دڵەکان</p><button class="btn-card">خوێندنەوە</button></div>
+                    <div class="card"><h3>تەسبیحات</h3><p>چەندین زیکری کورت و بەپیت</p><button class="btn-card">خوێندنەوە</button></div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <p>مافی کۆپیکردنی پارێزراوە بۆ پڕۆژەی قورئانی پیرۆز © 2026</p>
+        </footer>
+    </div>
+
+    <!-- جاڤاسکڕێپت بۆ کات و دەنگەکە -->
+    <script>
+        let timeLeft = 50;
+        const countdownElement = document.getElementById('countdown');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const mainContent = document.getElementById('main-content');
+        const audio = document.getElementById('quran-audio');
+
+        // فەنکشن بۆ ئەگەرێک وێبگڕەڕەکە خۆکارانە دەنگی لێنەدا
+        function playAudio() {
+            audio.play().catch(error => console.log("کارپێکردنی دەنگ پێویستی بە کلیکی بەکارهێنەر هەیە"));
+        }
+
+        // هەوڵدان بۆ لێدانی دەنگ لەگەڵ کردنەوەی لاپەڕەکە
+        window.addEventListener('DOMContentLoaded', () => {
+            playAudio();
+        });
+
+        // ژماردنی پێچەوانەی ٥٠ چرکە
+        const timer = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                
+                // کەمکردنەوەی دەنگەکە بەرە بەرە پێش داخران
+                let fadeAudio = setInterval(() => {
+                    if (audio.volume > 0.1) {
+                        audio.volume -= 0.1;
+                    } else {
+                        audio.pause();
+                        clearInterval(fadeAudio);
+                    }
+                }, 100);
+
+                // ئەنیمێیشنی گۆڕینی لاپەڕە
+                welcomeScreen.style.opacity = 0;
+                setTimeout(() => {
+                    welcomeScreen.style.display = 'none';
+                    mainContent.classList.remove('hidden');
+                    setTimeout(() => {
+                        mainContent.style.opacity = 1;
+                    }, 50);
+                }, 1000);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
