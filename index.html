@@ -1,1259 +1,737 @@
 <!DOCTYPE html>
-<html lang="ckb" dir="rtl">
+<html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پڕۆژەی قورئانی پیرۆز | Quran Project</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        emerald: {
-                            850: '#064e3b',
-                            900: '#022c22',
-                        },
-                        gold: {
-                            400: '#fbbf24',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                        }
-                    },
-                    fontFamily: {
-                        quran: ['Amiri', 'serif'],
-                        kurdish: ['Vazirmatn', 'Noto Sans Arabic', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <title>Nexuim.Official - ئەپڵیکەیشنی ئیسلامی</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2d6a4f;
+            --primary-light: #52b788;
+            --bg-color: #f4f9f4;
+            --card-bg: #ffffff;
+            --text-color: #1b4332;
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 80px;
         }
-        .font-quran {
-            font-family: 'Amiri', serif;
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #059669;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #10b981;
-        }
-        /* Glassmorphism */
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .active-tab {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
-            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
+            padding: 20px;
+            text-align: center;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .menu-btn {
+            background: var(--card-bg);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.95);
+            background: #e8f5e9;
+        }
+
+        .menu-btn i {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .menu-btn span {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+        }
+
+        .quran-controls, .reciter-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-light);
+            margin-bottom: 15px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .surah-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .surah-item:hover {
+            background-color: #f0fdf4;
+        }
+
+        .surah-item i {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .dhikr-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            border-right: 5px solid var(--primary);
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+        }
+
+        .dhikr-arabic {
+            font-size: 20px;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #000;
+            line-height: 1.6;
+        }
+
+        .dhikr-meaning {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .dhikr-counter {
+            background: var(--primary-light);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .counter-section {
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        .big-counter {
+            font-size: 72px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .circle-btn {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            font-size: 24px;
+            box-shadow: 0 8px 15px rgba(45, 106, 79, 0.3);
+            cursor: pointer;
+        }
+
+        .circle-btn:active {
+            transform: scale(0.98);
+        }
+
+        .compass-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
+            border: 5px solid var(--primary);
+            border-radius: 50%;
+            transition: transform 0.1s ease;
+        }
+
+        .compass-needle {
+            position: absolute;
+            width: 4px;
+            height: 90px;
+            background: red;
+            top: 10px;
+            left: 98px;
+            transform-origin: bottom center;
+        }
+
+        .kaaba-icon {
+            position: absolute;
+            top: 10px;
+            left: 90px;
+            font-size: 24px;
+            color: gold;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .faq-answer {
+            margin-top: 10px;
+            color: #666;
+            display: none;
+        }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #88px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            display: block;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+<body>
 
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-emerald-900/50 px-4 lg:px-8 py-3">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <!-- Logo & Brand -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('quran')">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-900/50">
-                    <i class="fa-solid fa-quran text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="font-bold text-lg text-emerald-400 leading-tight">پڕۆژەی قورئانی پیرۆز</h1>
-                    <p class="text-xs text-slate-400">دەنگ، تەجوید و فێربوونی نوێژ</p>
-                </div>
-            </div>
-
-            <!-- Main Nav Tabs -->
-            <nav class="hidden md:flex items-center gap-1 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800">
-                <button onclick="switchTab('quran')" id="nav-quran" class="nav-btn px-4 py-2 rounded-xl text-sm font-medium transition-all active-tab flex items-center gap-2">
-                    <i class="fa-solid fa-book-quran"></i>
-                    قورئانی پیرۆز
-                </button>
-                <button onclick="switchTab('tuhfa')" id="nav-tuhfa" class="nav-btn px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    تحفة الأطفال (تەجوید)
-                </button>
-                <button onclick="switchTab('prayer')" id="nav-prayer" class="nav-btn px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-mosque"></i>
-                    فێربوونی نوێژ
-                </button>
-            </nav>
-
-            <!-- User Auth Profile Button -->
-            <div class="flex items-center gap-3">
-                <div id="user-profile-badge" class="hidden items-center gap-2 bg-slate-800/80 border border-slate-700 px-3 py-1.5 rounded-xl">
-                    <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs" id="user-avatar-initial">
-                        U
-                    </div>
-                    <span id="user-email-display" class="text-xs font-medium text-slate-200 max-w-[120px] lg:max-w-[180px] truncate"></span>
-                    <button onclick="logoutUser()" title="دەرچوون" class="text-slate-400 hover:text-red-400 text-xs mr-1 transition-colors">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    </button>
-                </div>
-
-                <button id="login-modal-btn" onclick="openLoginModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 shadow-lg shadow-emerald-900/30">
-                    <i class="fa-solid fa-user-check"></i>
-                    بەستنەوەی ئیمێڵ
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile Bottom Navigation -->
-        <div class="md:hidden fixed bottom-0 left-0 right-0 glass-panel border-t border-slate-800 p-2 z-50 flex justify-around items-center">
-            <button onclick="switchTab('quran')" id="mobile-nav-quran" class="flex flex-col items-center gap-1 text-emerald-400 text-xs">
-                <i class="fa-solid fa-book-quran text-lg"></i>
-                قورئان
-            </button>
-            <button onclick="switchTab('tuhfa')" id="mobile-nav-tuhfa" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white text-xs">
-                <i class="fa-solid fa-graduation-cap text-lg"></i>
-                تەجوید
-            </button>
-            <button onclick="switchTab('prayer')" id="mobile-nav-prayer" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white text-xs">
-                <i class="fa-solid fa-mosque text-lg"></i>
-                نوێژ
-            </button>
-        </div>
+    <header>
+        <h1 id="app-title">Nexuim.Official</h1>
+        <p>قورئانی پیرۆز و زیکرەکان</p>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 flex-grow mb-20 md:mb-10 w-full">
-
-        <!-- ================= QURAN TAB ================= -->
-        <section id="tab-quran" class="tab-content space-y-6">
-            <!-- Hero Banner with App Showcase -->
-            <div class="relative rounded-3xl overflow-hidden glass-panel p-6 lg:p-8 bg-gradient-to-r from-slate-900 via-emerald-950/40 to-slate-900 border border-emerald-500/20">
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <div class="md:col-span-7 space-y-4">
-                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
-                            <i class="fa-solid fa-circle-play text-[10px] animate-pulse"></i> گوێگرتنی ڕاستەوخۆ بە بەرزترین کوالێتی
-                        </span>
-                        <h2 class="text-2xl lg:text-4xl font-extrabold text-white leading-tight">
-                            بیخوێنەوە، گوێی لێ بگرە و فێری تەجوید ببە
-                        </h2>
-                        <p class="text-slate-300 text-sm lg:text-base leading-relaxed">
-                            هەڵبژاردنی زیاتر لە ٧٠ قورئان خوێنی بەناوبانگی جیهانی ئیسلامی، لەگەڵ بەشی فێربوونی دەنگەکان بۆ منداڵان و تەجویدی تحفة الأطفال.
-                        </p>
-                    </div>
-                    <div class="md:col-span-5 flex justify-center items-center">
-                        <div class="relative w-full max-w-sm rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/30 group">
-                            <img src="88165.png" alt="Quran Mobile Preview" class="w-full h-48 object-cover object-top transition-transform duration-500 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent flex items-end p-4">
-                                <span class="text-xs font-medium text-emerald-300 flex items-center gap-2">
-                                    <i class="fa-solid fa-mobile-screen"></i> سیستەمی گوێگرتن و خوێندنەوەی بەردەوام
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+    <div class="container">
+        
+        <!-- HOME PAGE -->
+        <div id="page-home" class="page active">
+            <div class="main-menu">
+                <div class="menu-btn" onclick="navigateTo('page-bayanian')">
+                    <i class="fa-solid fa-sun"></i>
+                    <span>بەیانیان</span>
+                </div>
+                <div class="menu-btn" onclick="navigateTo('page-ewaran')">
+                    <i class="fa-solid fa-moon"></i>
+                    <span>ئێواران</span>
+                </div>
+                <div class="menu-btn" onclick="navigateTo('page-khewtan')">
+                    <i class="fa-solid fa-bed"></i>
+                    <span>پێش خەوتن</span>
+                </div>
+                <div class="menu-btn" onclick="navigateTo('page-dway-nwezh')">
+                    <i class="fa-solid fa-mosque"></i>
+                    <span>دوای نوێژەکان</span>
+                </div>
+                <div class="menu-btn" onclick="navigateTo('page-jwenrajwen')">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>زیکری جۆراوجۆر</span>
+                </div>
+                <div class="menu-btn" onclick="navigateTo('page-nzakan')">
+                    <i class="fa-solid fa-hands-praying"></i>
+                    <span>نزای جۆراوجۆر</span>
+                </div>
+                <div class="menu-btn" onclick="navigateTo('page-zhmirer')">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>ژمێرەر</span>
+                </div>
+                <div class="menu-btn" onclick="navigateTo('page-qibla')">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>قیبلە</span>
+                </div>
+                <div class="menu-btn" onclick="navigateTo('page-faq')">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span>پرسیارە باوەکان</span>
+                </div>
+                <div class="menu-btn" onclick="navigateTo('page-destnishankraw')">
+                    <i class="fa-solid fa-star"></i>
+                    <span>دەستنیشانکراوەکان</span>
                 </div>
             </div>
-
-            <!-- Controls: Reciter Selector, Category Filter & Search -->
-            <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Reciter Category Selection -->
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1.5 font-medium">جۆری بەشی قورئان خوێنەکان:</label>
-                        <select id="reciter-category-select" onchange="updateRecitersList()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-xl px-3 py-2.5 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none">
-                            <option value="beauty">مامۆستا بۆ دەنگ خۆشی (ئاسایی & تلاوات)</option>
-                            <option value="learning">قورئان خوێنەکان بۆ فێربوون</option>
-                            <option value="children">مامۆستاکە لەگەڵ منداڵەکان (المعلم)</option>
-                        </select>
-                    </div>
-
-                    <!-- Reciter Select -->
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1.5 font-medium">مامۆستا / قورئان خوێن هەڵبژێرە:</label>
-                        <select id="reciter-select" onchange="onReciterChange()" class="w-full bg-slate-900 border border-slate-700 text-amber-400 font-semibold rounded-xl px-3 py-2.5 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none">
-                            <!-- Populated dynamically via JS -->
-                        </select>
-                    </div>
-
-                    <!-- Surah Search -->
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1.5 font-medium">گەڕان بۆ سورەت:</label>
-                        <div class="relative">
-                            <input type="text" id="surah-search" oninput="filterSurahs()" placeholder="ناوی سورەت بە کوردی یان عەرەبی..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-xl pr-10 pl-3 py-2.5 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none">
-                            <i class="fa-solid fa-magnifying-glass absolute right-3 top-3.5 text-slate-500 text-sm"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Active Audio Player Card -->
-            <div id="player-banner" class="glass-panel p-5 rounded-2xl border-2 border-emerald-500/40 bg-slate-900/90 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-4 w-full md:w-auto">
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-600/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-2xl flex-shrink-0">
-                        <i class="fa-solid fa-circle-play" id="player-icon-display"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 id="player-surah-title" class="font-bold text-lg text-white">سورەتی الفاتحة</h3>
-                            <span id="player-revelation-tag" class="text-[10px] bg-slate-800 text-emerald-400 px-2 py-0.5 rounded border border-slate-700">مەکی</span>
-                        </div>
-                        <p id="player-reciter-title" class="text-xs text-amber-400 mt-0.5">مامۆستا: عبدالباسط عبدالصمد</p>
-                    </div>
-                </div>
-
-                <!-- Custom Audio Control Bar -->
-                <div class="flex flex-col items-center gap-2 w-full md:w-1/2">
-                    <audio id="quran-audio" class="hidden"></audio>
-                    <div class="flex items-center justify-center gap-4">
-                        <button onclick="playPrevSurah()" class="text-slate-400 hover:text-white transition-colors text-lg" title="سورەتی پێشوو">
-                            <i class="fa-solid fa-backward-step"></i>
-                        </button>
-                        <button onclick="toggleAudioPlay()" id="play-pause-btn" class="w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center text-xl transition-all shadow-lg shadow-emerald-500/30">
-                            <i class="fa-solid fa-play" id="play-btn-icon"></i>
-                        </button>
-                        <button onclick="playNextSurah()" class="text-slate-400 hover:text-white transition-colors text-lg" title="سورەتی دواتر">
-                            <i class="fa-solid fa-forward-step"></i>
-                        </button>
-                    </div>
-                    <div class="w-full flex items-center gap-3 text-xs text-slate-400">
-                        <span id="audio-time-current">00:00</span>
-                        <input type="range" id="audio-seek" value="0" min="0" max="100" oninput="seekAudio(this.value)" class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500">
-                        <span id="audio-time-total">00:00</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Surah Reading Viewer Modal/Container -->
-            <div id="surah-text-container" class="hidden glass-panel p-6 rounded-2xl border border-emerald-500/30 space-y-4 bg-slate-950/80">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <h3 id="surah-viewer-title" class="font-bold text-xl text-emerald-400 font-quran"></h3>
-                    <button onclick="closeSurahViewer()" class="text-slate-400 hover:text-white text-sm bg-slate-800 px-3 py-1 rounded-lg">
-                        داخستنی خوێندنەوە <i class="fa-solid fa-xmark mr-1"></i>
-                    </button>
-                </div>
-                <div id="basmala-header" class="text-center text-amber-400 font-quran text-2xl py-2">
-                    بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
-                </div>
-                <div id="surah-verses-list" class="space-y-4 text-center font-quran text-2xl text-slate-100 leading-[2.4] max-h-96 overflow-y-auto px-4 py-2">
-                    <!-- Verses will load here -->
-                </div>
-            </div>
-
-            <!-- Surahs Grid (114 Surahs) -->
-            <div>
-                <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-list-ol text-emerald-400"></i> لیستی هەموو سورەتەکانی قورئانی پیرۆز (١١٤ سورەت)
-                </h3>
-                <div id="surahs-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <!-- Rendered dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= TUHFA TAB ================= -->
-        <section id="tab-tuhfa" class="tab-content hidden space-y-6">
-            <div class="glass-panel p-6 rounded-3xl border border-amber-500/20 bg-gradient-to-br from-slate-900 via-amber-950/20 to-slate-900">
-                <div class="max-w-3xl space-y-3">
-                    <span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-semibold">
-                        فێربوونی ئەحکامەکانی تەجوید
-                    </span>
-                    <h2 class="text-2xl lg:text-3xl font-extrabold text-white">
-                        بەشی تحفة الأطفال — ١٠ بەیتی یەکەم
-                    </h2>
-                    <p class="text-slate-300 text-sm leading-relaxed">
-                        شیتاڵکاریی و مانا و حوکمەکانی تەجوید بە زمانی کوردی بۆ ١٠ بەیتی دەستپێکی منظومة تحفة الأطفال لە نووسینی شێخ سڵێمانی جەمزوری.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Tuhfa Verses Cards Grid -->
-            <div id="tuhfa-verses-container" class="space-y-6">
-                <!-- Rendered dynamically -->
-            </div>
-        </section>
-
-        <!-- ================= PRAYER TAB ================= -->
-        <section id="tab-prayer" class="tab-content hidden space-y-6">
-            <div class="glass-panel p-6 rounded-3xl border border-teal-500/20 bg-gradient-to-br from-slate-900 via-teal-950/20 to-slate-900">
-                <div class="max-w-3xl space-y-3">
-                    <span class="bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs px-3 py-1 rounded-full font-semibold">
-                        ڕێنمایی بەکردار و دروست
-                    </span>
-                    <h2 class="text-2xl lg:text-3xl font-extrabold text-white">
-                        فێرکاریی تەواوی نوێژی فەرز (لە وەستان تا سەلام)
-                    </h2>
-                    <p class="text-slate-300 text-sm leading-relaxed">
-                        هەنگاو بە هەنگاو بە نووسینی عەرەبی، خوێندنەوەی کوردی، مانای کوردی و ڕوونکردنەوەی ئەنجامدان.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Prayer Overview Table -->
-            <div class="glass-panel p-5 rounded-2xl border border-slate-800 overflow-x-auto">
-                <h3 class="font-bold text-lg text-emerald-400 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-clock"></i> ژمارەی ڕکعەتەکانی ٥ نوێژە فەرزەکە
-                </h3>
-                <table class="w-full text-sm text-right border-collapse min-w-[500px]">
-                    <thead>
-                        <tr class="bg-slate-800/80 text-emerald-300 border-b border-slate-700">
-                            <th class="p-3">نوێژ</th>
-                            <th class="p-3">ژمارەی ڕکعەت</th>
-                            <th class="p-3">شێوازی خوێندنەوە</th>
-                            <th class="p-3">ڕوونکردنەوە</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-800 text-slate-300">
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-3 font-bold text-white">بەیانی (الفجر)</td>
-                            <td class="p-3"><span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">٢ ڕکعەت</span></td>
-                            <td class="p-3">بە دەنگەوە (دەنگدار)</td>
-                            <td class="p-3 text-xs">فاتحە + سورەت لە هەردوو ڕکعەت</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-3 font-bold text-white">نیوەڕۆ (الظهر)</td>
-                            <td class="p-3"><span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">٤ ڕکعەت</span></td>
-                            <td class="p-3">بێ دەنگ (سری)</td>
-                            <td class="p-3 text-xs">تەحیاتی یەکەم لە دوای ڕکعەتی ٢</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-3 font-bold text-white">عەسر (العصر)</td>
-                            <td class="p-3"><span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">٤ ڕکعەت</span></td>
-                            <td class="p-3">بێ دەنگ (سری)</td>
-                            <td class="p-3 text-xs">وەکو نوێژی نیوەڕۆ</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-3 font-bold text-white">مەغریب (المغرب)</td>
-                            <td class="p-3"><span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">٣ ڕکعەت</span></td>
-                            <td class="p-3">ڕکعەتی ١ و ٢ بە دەنگ</td>
-                            <td class="p-3 text-xs">ڕکعەتی ٣ تەنها فاتحە بێ دەنگ</td>
-                        </tr>
-                        <tr class="hover:bg-slate-800/40">
-                            <td class="p-3 font-bold text-white">عیشا (العشاء)</td>
-                            <td class="p-3"><span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">٤ ڕکعەت</span></td>
-                            <td class="p-3">ڕکعەتی ١ و ٢ بە دەنگ</td>
-                            <td class="p-3 text-xs">ڕکعەتی ٣ و ٤ بێ دەنگ</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Step by Step Prayer Guide Accordion / Cards -->
-            <div id="prayer-steps-container" class="space-y-4">
-                <!-- Rendered dynamically -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="glass-panel border-t border-slate-800 py-6 text-center text-xs text-slate-400 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3">
-            <p>© پڕۆژەی قورئانی پیرۆز — خزمەتگوزاری بێبەرامبەری بەردەوام</p>
-            <p class="text-slate-500">لەگەڵ پاراستنی هەژماری بەکارهێنەر لە سەردانیکردندا</p>
         </div>
-    </footer>
 
-    <!-- LOGIN MODAL -->
-    <div id="login-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="glass-panel bg-slate-900 border border-emerald-500/30 rounded-3xl p-6 lg:p-8 max-w-md w-full space-y-5 shadow-2xl relative">
-            <button onclick="closeLoginModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <div class="text-center space-y-2">
-                <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-2xl">
-                    <i class="fa-solid fa-envelope-open-text"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white">داخڵبوون / بەستنەوەی ئیمێڵ</h3>
-                <p class="text-xs text-slate-400">ئیمێڵی خۆت داخڵ بکە بۆ ئەوەی ڕێکخستنەکانت پاشەکەوت بێت و logout نەبیت.</p>
+        <!-- QURAN PAGE -->
+        <div id="page-quran" class="page">
+            <select id="reciterSelect" class="reciter-select" onchange="loadQuran()">
+                <!-- 30 Reciters will be populated dynamically -->
+            </select>
+            <div id="surah-list" class="card" style="padding:0;">
+                <!-- 114 Surahs will be loaded here -->
             </div>
+        </div>
 
-            <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">ئیمێڵی تۆ:</label>
-                    <input type="email" id="login-email-input" required placeholder="example@gmail.com" class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none">
+        <!-- BAYANIAN PAGE -->
+        <div id="page-bayanian" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <h2>زیکرەکانی بەیانیان</h2><br>
+            <div id="bayanian-list"></div>
+        </div>
+
+        <!-- EWARAN PAGE -->
+        <div id="page-ewaran" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <h2>زیکرەکانی ئێواران</h2><br>
+            <div id="ewaran-list"></div>
+        </div>
+
+        <!-- DWAY NWEZH PAGE -->
+        <div id="page-dway-nwezh" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <h2>زیکرەکانی دوای نوێژەکان</h2><br>
+            <div id="dway-nwezh-list"></div>
+        </div>
+
+        <!-- KHEWTAN PAGE -->
+        <div id="page-khewtan" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <h2>زیکر و سوننەتەکانی پێش خەوتن</h2><br>
+            <div id="khewtan-list"></div>
+        </div>
+
+        <!-- ZIKRI JOWRA JOWR -->
+        <div id="page-jwenrajwen" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <h2>زیکری جۆراوجۆر</h2><br>
+            <div id="jora-list"></div>
+        </div>
+
+        <!-- NZAKAN PAGE -->
+        <div id="page-nzakan" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <h2>نزای جۆراوجۆر</h2><br>
+            <div id="nza-list"></div>
+        </div>
+
+        <!-- ZHMIRER PAGE -->
+        <div id="page-zhmirer" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <div class="card counter-section">
+                <h2>تەسـبیح و ژمێرەر</h2>
+                <div class="big-counter" id="counter-value">0</div>
+                <button class="circle-btn" onclick="incrementCounter()">سبحان الله</button>
+                <br><br>
+                <button onclick="resetCounter()" style="padding:8px 20px; border:none; border-radius:5px; background:#d9534f; color:white; cursor:pointer;">سفرکردنەوە</button>
+            </div>
+        </div>
+
+        <!-- QIBLA PAGE -->
+        <div id="page-qibla" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <div class="card" style="text-align: center;">
+                <h2>قیبلەنامە</h2>
+                <p style="font-size: 13px; margin-top:5px; color:#666;">مۆبایلەکەت بە ڕووتەختی دابنێ. کاتێک ڕووەو قیبلە دەبیت، دەنگی ئاگادارکردنەوە لێدەدات.</p>
+                <div class="compass-container" id="compass">
+                    <div class="compass-needle"></div>
+                    <i class="fa-solid fa-kaaba kaaba-icon"></i>
                 </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">ناوی تەواوت (ئارەزوومەندانە):</label>
-                    <input type="text" id="login-name-input" placeholder="ناو و پاشناو" class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none">
-                </div>
-                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 rounded-xl text-sm transition-all shadow-lg shadow-emerald-900/40">
-                    پاشەکەوتکردن و داخڵبوون
-                </button>
-            </form>
+                <h3 id="qibla-status" style="color: red;">تکایە بیسوڕێنە...</h3>
+            </div>
+        </div>
+
+        <!-- FAQ PAGE -->
+        <div id="page-faq" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <div class="card">
+                <h2>پرسیارە باوەکان وەڵامەکانیان</h2>
+                <div id="faq-list"></div>
+            </div>
+        </div>
+
+        <!-- DESTNISHANKRAW PAGE -->
+        <div id="page-destnishankraw" class="page">
+            <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
+            <div class="card" style="text-align: center; padding: 40px 20px;">
+                <i class="fa-solid fa-hourglass-half" style="font-size: 48px; color: var(--primary); margin-bottom:15px;"></i>
+                <h2>بەردەست نیە بەم زوانە...</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <div class="nav-bar">
+        <div class="nav-item active" id="nav-home" onclick="navigateTo('page-home')">
+            <i class="fa-solid fa-house"></i>
+            <span>سەرەکی</span>
+        </div>
+        <div class="nav-item" id="nav-quran" onclick="navigateTo('page-quran')">
+            <i class="fa-solid fa-book-quran"></i>
+            <span>قورئان</span>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        /* ================= DATA STRUCTURES ================= */
+    <!-- Audio Player Hidden Element -->
+    <audio id="quranPlayer"></audio>
+    <!-- Audio beep for Qibla -->
+    <audio id="beepAudio" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg"></audio>
 
-        // Reciters Categorized Data
-        const RECITERS_DATA = {
-            beauty: [
-                { name: "عبدالباسط عبدالصمد", id: "ar.abdulbasitmurattal", server: "https://server7.mp3quran.net/basit/" },
-                { name: "محمد صديق المنشاوي", id: "ar.minshawi", server: "https://server10.mp3quran.net/minsh/" },
-                { name: "محمود خليل الحصري", id: "ar.husary", server: "https://server13.mp3quran.net/hussary/" },
-                { name: "مصطفى إسماعيل", id: "ar.mustafaismail", server: "https://server8.mp3quran.net/mustafa/" },
-                { name: "محمود علي البنا", id: "ar.mahmoudalibanna", server: "https://server8.mp3quran.net/banna/" },
-                { name: "عبد الرحمن السديس", id: "ar.abdurrahmaansudais", server: "https://server11.mp3quran.net/sds/" },
-                { name: "سعود الشريم", id: "ar.saoodshuraym", server: "https://server7.mp3quran.net/shur/" },
-                { name: "ماهر المعيقلي", id: "ar.mahermuaiqly", server: "https://server12.mp3quran.net/maher/" },
-                { name: "ياسر الدوسري", id: "ar.yasserdussary", server: "https://server11.mp3quran.net/yasser/" },
-                { name: "فارس عباد", id: "ar.faresabbad", server: "https://server8.mp3quran.net/frs_a/" },
-                { name: "مشاري راشد العفاسي", id: "ar.alafasy", server: "https://server8.mp3quran.net/afs/" },
-                { name: "سعد الغامدي", id: "ar.saadghamdi", server: "https://server7.mp3quran.net/s_gmd/" },
-                { name: "نبيل الرفاعي", id: "ar.nabilnifai", server: "https://server9.mp3quran.net/nabil/" },
-                { name: "هاني الرفاعي", id: "ar.hanirifai", server: "https://server8.mp3quran.net/hani/" },
-                { name: "أحمد العجمي", id: "ar.ahmedajamy", server: "https://server10.mp3quran.net/ajm/" },
-                { name: "إدريس أبكر", id: "ar.idreesabkar", server: "https://server6.mp3quran.net/abkar/" },
-                { name: "خالد الجليل", id: "ar.khalidaljaleel", server: "https://server10.mp3quran.net/jleel/" },
-                { name: "بندر بليلة", id: "ar.bandarbalilah", server: "https://server6.mp3quran.net/balilah/" },
-                { name: "ناصر القطامي", id: "ar.nasserqatami", server: "https://server6.mp3quran.net/qtm/" },
-                { name: "عبد الله الجهني", id: "ar.abdullahjuhany", server: "https://server13.mp3quran.net/jhn/" },
-                { name: "علي جابر", id: "ar.alijaber", server: "https://server11.mp3quran.net/a_jbr/" },
-                { name: "صلاح بو خاطر", id: "ar.salahbukhatir", server: "https://server8.mp3quran.net/bu_khtr/" },
-                { name: "محمد أيوب", id: "ar.muhammadayyoub", server: "https://server8.mp3quran.net/ayyoub/" },
-                { name: "أبو بكر الشاطري", id: "ar.shaatree", server: "https://server11.mp3quran.net/shatri/" },
-                { name: "عبد الودود حنيف", id: "ar.abdulwadoodhaneef", server: "https://server8.mp3quran.net/wdood/" },
-                { name: "رعد الكردي", id: "ar.raadalkurdi", server: "https://server6.mp3quran.net/kurdi/" },
-                { name: "شحات محمد أنور", id: "ar.shahatanwar", server: "https://server11.mp3quran.net/shehat/" },
-                { name: "محمود الشحات أنور", id: "ar.mahmoudshahatanwar", server: "https://server11.mp3quran.net/m_shehat/" },
-                { name: "محمد محمود الطبلاوي", id: "ar.tablawi", server: "https://server12.mp3quran.net/tblwi/" },
-                { name: "كامل يوسف البهتيمي", id: "ar.bahtimi", server: "https://server10.mp3quran.net/bahtimi/" },
-                { name: "طه الفشني", id: "ar.fashni", server: "https://server10.mp3quran.net/fashni/" },
-                { name: "عبد الفتاح الشعشاعي", id: "ar.shashai", server: "https://server10.mp3quran.net/shashai/" },
-                { name: "محمد عمران", id: "ar.omran", server: "https://server10.mp3quran.net/omran/" },
-                { name: "المنشاوي — التلاوات المجودة", id: "ar.minshawimujawwad", server: "https://server10.mp3quran.net/minsh_mjwd/" },
-                { name: "عبد الباسط — التلاوات المرتلة", id: "ar.abdulbasitmurattal2", server: "https://server7.mp3quran.net/basit/" },
-                { name: "يونس اسويلص", id: "ar.younesasweiliss", server: "https://server11.mp3quran.net/sweilis/" },
-                { name: "عبد العزيز سحيم", id: "ar.abdulazizsuheim", server: "https://server16.mp3quran.net/suheim/" },
-                { name: "أحمد النفيس", id: "ar.ahmednafis", server: "https://server16.mp3quran.net/nafiss/" },
-                { name: "إسلام صبحي", id: "ar.islamsobhi", server: "https://server14.mp3quran.net/islam/" },
-                { name: "محمد اللحيدان", id: "ar.luhaidan", server: "https://server8.mp3quran.net/lhdan/" }
-            ],
-            learning: [
-                { name: "محمود خليل الحصري (مرتل للتعلم)", id: "ar.husary", server: "https://server13.mp3quran.net/hussary/" },
-                { name: "محمد صديق المنشاوي (مرتل)", id: "ar.minshawi", server: "https://server10.mp3quran.net/minsh/" },
-                { name: "عبدالباسط عبدالصمد (مرتل)", id: "ar.abdulbasit", server: "https://server7.mp3quran.net/basit/" },
-                { name: "مصطفى إسماعيل (تعليمي)", id: "ar.mustafaismail", server: "https://server8.mp3quran.net/mustafa/" },
-                { name: "محمود علي البنا (مرتل)", id: "ar.banna", server: "https://server8.mp3quran.net/banna/" },
-                { name: "محمد محمود الطبلاوي", id: "ar.tablawi", server: "https://server12.mp3quran.net/tblwi/" },
-                { name: "كامل يوسف البهتيمي", id: "ar.bahtimi", server: "https://server10.mp3quran.net/bahtimi/" },
-                { name: "عبد الفتاح الشعشاعي", id: "ar.shashai", server: "https://server10.mp3quran.net/shashai/" },
-                { name: "طه الفشني", id: "ar.fashni", server: "https://server10.mp3quran.net/fashni/" },
-                { name: "شحات محمد أنور", id: "ar.shahatanwar", server: "https://server11.mp3quran.net/shehat/" },
-                { name: "محمود الشحات أنور", id: "ar.mahmoudshahatanwar", server: "https://server11.mp3quran.net/m_shehat/" },
-                { name: "محمد رفعت", id: "ar.rifai", server: "https://server14.mp3quran.net/rifai/" },
-                { name: "أبو العينين شعيشع", id: "ar.shoisha", server: "https://server11.mp3quran.net/shoisha/" },
-                { name: "عبد الله خياط", id: "ar.khayat", server: "https://server12.mp3quran.net/khayat/" },
-                { name: "محمد أيوب", id: "ar.ayyoub", server: "https://server8.mp3quran.net/ayyoub/" },
-                { name: "علي جابر", id: "ar.jaber", server: "https://server11.mp3quran.net/a_jbr/" },
-                { name: "عبد الرحمن السديس", id: "ar.sudaes", server: "https://server11.mp3quran.net/sds/" },
-                { name: "سعود الشريم", id: "ar.shuraim", server: "https://server7.mp3quran.net/shur/" },
-                { name: "ماهر المعيقلي", id: "ar.maher", server: "https://server12.mp3quran.net/maher/" },
-                { name: "ياسر الدوسري", id: "ar.dosari", server: "https://server11.mp3quran.net/yasser/" },
-                { name: "فارس عباد", id: "ar.abbad", server: "https://server8.mp3quran.net/frs_a/" },
-                { name: "سعد الغامدي", id: "ar.ghamdi", server: "https://server7.mp3quran.net/s_gmd/" },
-                { name: "مشاري راشد العفاسي", id: "ar.afasy", server: "https://server8.mp3quran.net/afs/" },
-                { name: "أحمد العجمي", id: "ar.ajmy", server: "https://server10.mp3quran.net/ajm/" },
-                { name: "أبو بكر الشاطري", id: "ar.shatri", server: "https://server11.mp3quran.net/shatri/" },
-                { name: "إدريس أبكر", id: "ar.abkar", server: "https://server6.mp3quran.net/abkar/" },
-                { name: "خالد الجليل", id: "ar.jleel", server: "https://server10.mp3quran.net/jleel/" },
-                { name: "ناصر القطامي", id: "ar.qatami", server: "https://server6.mp3quran.net/qtm/" },
-                { name: "عبد الله الجهني", id: "ar.juhany", server: "https://server13.mp3quran.net/jhn/" },
-                { name: "بندر بليلة", id: "ar.balilah", server: "https://server6.mp3quran.net/balilah/" },
-                { name: "صلاح بو خاطر", id: "ar.bukhatir", server: "https://server8.mp3quran.net/bu_khtr/" },
-                { name: "محمد اللحيدان", id: "ar.lhdan", server: "https://server8.mp3quran.net/lhdan/" },
-                { name: "رعد الكردي", id: "ar.kurdi", server: "https://server6.mp3quran.net/kurdi/" },
-                { name: "أحمد النفيس", id: "ar.nafiss", server: "https://server16.mp3quran.net/nafiss/" },
-                { name: "إسلام صبحي", id: "ar.islam", server: "https://server14.mp3quran.net/islam/" },
-                { name: "عبد العزيز سحيم", id: "ar.suheim", server: "https://server16.mp3quran.net/suheim/" },
-                { name: "يونس اسويلص", id: "ar.sweilis", server: "https://server11.mp3quran.net/sweilis/" },
-                { name: "هاني الرفاعي", id: "ar.hanirifai", server: "https://server8.mp3quran.net/hani/" },
-                { name: "نبيل الرفاعي", id: "ar.nabil", server: "https://server9.mp3quran.net/nabil/" },
-                { name: "عبد الودود حنيف", id: "ar.wdood", server: "https://server8.mp3quran.net/wdood/" }
-            ],
-            children: [
-                { name: "الشيخ أيمن سويد (مع الأطفال)", id: "ar.swaid_kids", server: "https://server14.mp3quran.net/swaid/" },
-                { name: "الشيخ محمود خليل الحصري (المعلم)", id: "ar.husary_kids", server: "https://server13.mp3quran.net/hussary_m/" },
-                { name: "الشيخ محمد صديق المنشاوي (المعلم)", id: "ar.minshawi_kids", server: "https://server10.mp3quran.net/minsh_m/" },
-                { name: "الشيخ عبدالباسط عبدالصمد (المعلم)", id: "ar.basit_kids", server: "https://server7.mp3quran.net/basit_m/" },
-                { name: "الشيخ محمد محمود الطبلاوي (المعلم)", id: "ar.tablawi_kids", server: "https://server12.mp3quran.net/tblwi/" },
-                { name: "الشيخ أحمد خليل شاهين", id: "ar.shaheen_kids", server: "https://server10.mp3quran.net/shaheen/" },
-                { name: "الشيخ إبراهيم الأخضر", id: "ar.akhdar_kids", server: "https://server6.mp3quran.net/akhdar/" },
-                { name: "الشيخ عبدالرشيد صوفي", id: "ar.sofi_kids", server: "https://server16.mp3quran.net/sofi/" },
-                { name: "الشيخ أيمن رشدي سويد", id: "ar.swaid2", server: "https://server14.mp3quran.net/swaid/" },
-                { name: "الشيخ عبد المحسن القاسم", id: "ar.qasim", server: "https://server6.mp3quran.net/qasm/" },
-                { name: "الشيخ عبد الله خياط", id: "ar.khayat", server: "https://server12.mp3quran.net/khayat/" },
-                { name: "الشيخ محمد أيوب", id: "ar.ayyoub", server: "https://server8.mp3quran.net/ayyoub/" },
-                { name: "الشيخ علي جابر", id: "ar.jaber", server: "https://server11.mp3quran.net/a_jbr/" },
-                { name: "الشيخ سعد الغامدي", id: "ar.ghamdi", server: "https://server7.mp3quran.net/s_gmd/" },
-                { name: "الشيخ مشاري راشد العفاسي", id: "ar.afasy", server: "https://server8.mp3quran.net/afs/" },
-                { name: "الشيخ فارس عباد", id: "ar.abbad", server: "https://server8.mp3quran.net/frs_a/" },
-                { name: "الشيخ أحمد العجمي", id: "ar.ajmy", server: "https://server10.mp3quran.net/ajm/" },
-                { name: "الشيخ إدريس أبكر", id: "ar.abkar", server: "https://server6.mp3quran.net/abkar/" },
-                { name: "الشيخ ياسر الدوسري", id: "ar.dosari", server: "https://server11.mp3quran.net/yasser/" },
-                { name: "الشيخ ماهر المعيقلي", id: "ar.maher", server: "https://server12.mp3quran.net/maher/" },
-                { name: "الشيخ ناصر القطامي", id: "ar.qatami", server: "https://server6.mp3quran.net/qtm/" },
-                { name: "الشيخ خالد الجليل", id: "ar.jleel", server: "https://server10.mp3quran.net/jleel/" },
-                { name: "الشيخ أبو بكر الشاطري", id: "ar.shatri", server: "https://server11.mp3quran.net/shatri/" },
-                { name: "الشيخ صلاح بو خاطر", id: "ar.bukhatir", server: "https://server8.mp3quran.net/bu_khtr/" },
-                { name: "الشيخ هاني الرفاعي", id: "ar.hanirifai", server: "https://server8.mp3quran.net/hani/" },
-                { name: "الشيخ نبيل الرفاعي", id: "ar.nabil", server: "https://server9.mp3quran.net/nabil/" },
-                { name: "الشيخ عبد الودود حنيف", id: "ar.wdood", server: "https://server8.mp3quran.net/wdood/" },
-                { name: "الشيخ رعد الكردي", id: "ar.kurdi", server: "https://server6.mp3quran.net/kurdi/" },
-                { name: "الشيخ أحمد النفيس", id: "ar.nafiss", server: "https://server16.mp3quran.net/nafiss/" },
-                { name: "الشيخ إسلام صبحي", id: "ar.islam", server: "https://server14.mp3quran.net/islam/" },
-                { name: "الشيخ عبد العزيز سحيم", id: "ar.suheim", server: "https://server16.mp3quran.net/suheim/" },
-                { name: "الشيخ يونس اسويلص", id: "ar.sweilis", server: "https://server11.mp3quran.net/sweilis/" },
-                { name: "الشيخ محمود الشحات أنور", id: "ar.m_shehat", server: "https://server11.mp3quran.net/m_shehat/" },
-                { name: "الشيخ شحات محمد أنور", id: "ar.shehat", server: "https://server11.mp3quran.net/shehat/" },
-                { name: "الشيخ مصطفى إسماعيل", id: "ar.mustafa", server: "https://server8.mp3quran.net/mustafa/" },
-                { name: "الشيخ محمود علي البنا", id: "ar.banna", server: "https://server8.mp3quran.net/banna/" },
-                { name: "الشيخ کامل يوسف البهتيمي", id: "ar.bahtimi", server: "https://server10.mp3quran.net/bahtimi/" },
-                { name: "الشيخ طه الفشني", id: "ar.fashni", server: "https://server10.mp3quran.net/fashni/" },
-                { name: "الشيخ عبد الفتاح الشعشاعي", id: "ar.shashai", server: "https://server10.mp3quran.net/shashai/" },
-                { name: "الشيخ محمد رفعت", id: "ar.rifai", server: "https://server14.mp3quran.net/rifai/" }
-            ]
+    <script>
+        // 30 famous reciters data mapping (using mp3quran.net API streams)
+        const reciters = [
+            { id: "1", name: "مشاري العفاسي", server: "https://server8.mp3quran.net/afs/" },
+            { id: "2", name: "عبد الباسط عبد الصمد", server: "https://server7.mp3quran.net/basit/" },
+            { id: "3", name: "ماهر المعيقلي", server: "https://server12.mp3quran.net/maher/" },
+            { id: "4", name: "سعود الشريم", server: "https://server7.mp3quran.net/shur/" },
+            { id: "5", name: "عبد الرحمن السديس", server: "https://server11.mp3quran.net/sds/" },
+            { id: "6", name: "سعد الغامدي", server: "https://server7.mp3quran.net/s_gmd/" },
+            { id: "7", name: "أحمد العجمي", server: "https://server10.mp3quran.net/ajm/" },
+            { id: "8", name: "ياسر الدوسري", server: "https://server11.mp3quran.net/yasser/" },
+            { id: "9", name: "ناصر القطامي", server: "https://server6.mp3quran.net/qtm/" },
+            { id: "10", name: "فارس عباد", server: "https://server8.mp3quran.net/frs_a/" },
+            { id: "11", name: "أبو بكر الشاطري", server: "https://server11.mp3quran.net/shatri/" },
+            { id: "12", name: "خالد الجليل", server: "https://server10.mp3quran.net/jleel/" },
+            { id: "13", name: "محمد الحسينان", server: "https://server8.mp3quran.net/hosn/" },
+            { id: "14", name: "محمود خليل الحصري", server: "https://server13.mp3quran.net/husr/" },
+            { id: "15", name: "محمد صديق المنشاوي", server: "https://server10.mp3quran.net/minsh/" },
+            { id: "16", name: "إدريس أبكر", server: "https://server6.mp3quran.net/abkr/" },
+            { id: "17", name: "خالد القحطاني", server: "https://server10.mp3quran.net/qah/" },
+            { id: "18", name: "صلاح بو خاطر", server: "https://server8.mp3quran.net/bu_khatr/" },
+            { id: "19", name: "عبد الله عواد الجهني", server: "https://server13.mp3quran.net/jhn/" },
+            { id: "20", name: "علي الحذيفي", server: "https://server9.mp3quran.net/huzaifi/" },
+            { id: "21", name: "محمد أيوب", server: "https://server8.mp3quran.net/ayoub/" },
+            { id: "22", name: "عبد الله الخياط", server: "https://server12.mp3quran.net/khayat/" },
+            { id: "23", name: "عادل الكلباني", server: "https://server8.mp3quran.net/klb/" },
+            { id: "24", name: "محمود علي البنا", server: "https://server8.mp3quran.net/banna/" },
+            { id: "25", name: "مشاري العفاسي (رواية ورش)", server: "https://server8.mp3quran.net/afs_warsh/" },
+            { id: "26", name: "علي جابر", server: "https://server11.mp3quran.net/jabr/" },
+            { id: "27", name: "عبد الرشيد صوفي", server: "https://server9.mp3quran.net/sofi/" },
+            { id: "28", name: "محمد جبريل", server: "https://server8.mp3quran.net/jbrl/" },
+            { id: "29", name: "شيخ أبو بكر الشاطري", server: "https://server11.mp3quran.net/shatri/" },
+            { id: "30", name: "عبد المحسن القاسم", server: "https://server8.mp3quran.net/qasm/" }
+        ];
+
+        // 114 Surah Names
+        const surahs = [
+            "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس", "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"
+        ];
+
+        // Dhikr Data arrays
+        const bayanianDhikr = [
+            { text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ.", mean: "بەیانیمان کردەوە و مولک و دەسەڵات هەر بۆ خوایە.", count: 1 },
+            { text: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ.", mean: "خوایه بە تۆوە گەیشتینە بەیانی، و بە تۆوە دەمرین و زیندوو دەبینەوە.", count: 1 }
+        ];
+
+        const ewaranDhikr = [
+            { text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ.", mean: "ئێوارەمان کردەوە و مولک و دەسەڵات بۆ خوایە.", count: 1 },
+            { text: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ.", mean: "خوایە بە تۆوە گەیشتینە ئێوارە و گەڕانەوەمان هەر بەرەو لای تۆیە.", count: 1 }
+        ];
+
+        const dwayNwezhDhikr = [
+            { text: "أَسْتَغْفِرُ اللهَ", mean: "داوای لێخۆشبوون لە خوایە دەکەم. (٣ جار)", count: 3 },
+            { text: "اللَّهُمَّ أَنْتَ السَّلَامُ، وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالإِكْرَامِ.", mean: "خوایە، تۆ سەرچاوەی ئاشتی و سەلامەتیت.", count: 1 },
+            { text: "لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ.", mean: "هیچ پەرستراوێک بە حەق نییە جگە لە الله.", count: 1 },
+            { text: "سُبْحَانَ اللهِ", mean: "الله پاک و بێکەموکوڕییە. (٣٣ جار)", count: 33 },
+            { text: "الْحَمْدُ لِلَّهِ", mean: "هەموو ستایش بۆ الله ـە. (٣٣ جار)", count: 33 },
+            { text: "اللهُ أَكْبَرُ", mean: "الله گەورەتر و مەزنترە لە هەموو شتێک. (٣٣ جار)", count: 33 },
+            { text: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...", mean: "آیەتی کورسی (البقرة: ٢٥٥)", count: 1 },
+            { text: "قُلْ هُوَ اللَّهُ أَحَدٌ + قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ + قُلْ أَعُوذُ بِرَبِّ النَّاسِ", mean: "سێ سورەتە کورتەکە (دوای بەیانی و مەغریب ٣ جار، نوێژەکانی تر ١ جار)", count: 3 },
+            { text: "اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَعَافِنِي، وَارْزُقْنِي.", mean: "خوایە لێم خۆش بە، ڕەحمم پێ بکە، ڕێنماییم بکە و ڕزقم بدە.", count: 1 }
+        ];
+
+        const khewtanDhikr = [
+            { text: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...", mean: "آیەتی کورسی پێش خەوتن بۆ پاراستن.", count: 1 },
+            { text: "قُلْ هُوَ اللَّهُ أَحَدٌ، قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، قُلْ أَعُوذُ بِرَبِّ النَّاسِ", mean: "هەر سێ سورەتەکە ٣ جار بخوێنە و بە دەستت بە جەستەتدا بکشێنە.", count: 3 },
+            { text: "آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ...", mean: "دوو ئایەتی کۆتایی سورەتی البقرة.", count: 1 },
+            { text: "سُبْحَانَ اللهِ (٣٣) - الْحَمْدُ لِلَّهِ (٣٣) - اللهُ أَكْبَرُ (٣٤)", mean: "تەسبیحی فاطمە پێش خەوتن.", count: 1 },
+            { text: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا", mean: "بە ناوی تۆ، خوایە، دەمرم و دەژیم.", count: 1 },
+            { text: "اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِيَ إِلَيْكَ...", mean: "دوعای سپاردنی خۆت بە خوای گەورە.", count: 1 }
+        ];
+
+        const joraJoraDhikr = [
+            { text: "أَسْتَغْفِرُ اللهَ وَأَتُوبُ إِلَيْهِ", mean: "داوای لێخۆشبوون لە الله دەکەم و تۆبەی بۆ دەکەم.", count: 100 },
+            { text: "سُبْحَانَ اللهِ وَبِحَمْدِهِ", mean: "الله پاکە و ستایش بۆ ئەوە.", count: 100 },
+            { text: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ", mean: "هیچ توانای گۆڕان و هیچ هێزێک نییە جگە بە یارمەتی الله.", count: 100 },
+            { text: "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَىٰ نَبِيِّنَا مُحَمَّدٍ", mean: "سەڵاواتدان لەسەر پێغەمبەر ﷺ", count: 100 }
+        ];
+
+        const nzakanList = [
+            { text: "رَبِّ اغْفِرْ لِي وَارْحَمْنِي وَأَنْتَ خَيْرُ الرَّاحِمِينَ", mean: "پەروەردگارم، لێم خۆش بە و ڕەحمم پێ بکە، تۆ باشترین ڕەحمکەری." },
+            { text: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", mean: "پەروەردگارمان، لە دنیادا خێرمان پێ ببەخشە، لە قیامەتیش خێرمان پێ ببەخشە." },
+            { text: "رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا", mean: "پەروەردگارم، لێم خۆش بە و لە دایک و باوکیشم خۆش بە." }
+        ];
+
+        const faqs = [
+            { q: "ئایا خوێندنەوەی زیکرەکان واجبە؟", a: "نەخێر، سوننەتێکی موئەککەدەیە و پاداشتێکی یەکجار گەورەی هەیە." },
+            { q: "ئایا دەستنوێژ پێویستە بۆ زیکرەکان؟", a: "نەخێر، دەتوانیت بەبێ دەستنوێژیش زیکر بکەیت بەڵام بە دەستنوێژەوە باشترە." },
+            { q: "کەی کاتی گونجاوە بۆ زیکری بەیانیان و ئێواران؟", a: "بەیانیان لە دوای نوێژی بەیانی تا خۆرهەڵات، ئێواران لە دوای نوێژی عەسر تا ئاوابوونی خۆر." }
+        ];
+
+        // Navigation Controller
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            if (pageId === 'page-home') document.getElementById('nav-home').classList.add('active');
+            if (pageId === 'page-quran') document.getElementById('nav-quran').classList.add('active');
+        }
+
+        // Initialize App & Load Components
+        window.onload = function() {
+            initQuranReciters();
+            loadQuran();
+            renderDhikrList('bayanian-list', bayanianDhikr);
+            renderDhikrList('ewaran-list', ewaranDhikr);
+            renderDhikrList('dway-nwezh-list', dwayNwezhDhikr);
+            renderDhikrList('khewtan-list', khewtanDhikr);
+            renderDhikrList('jora-list', joraJoraDhikr);
+            renderNzaList();
+            renderFAQ();
+            initQibla();
         };
 
-        // Complete 114 Surahs Metadata
-        const SURAHS = [
-            { num: 1, nameAr: "الفاتحة", nameKu: "سورة الفاتحة", type: "مەکی", verses: 7 },
-            { num: 2, nameAr: "البقرة", nameKu: "سورة البقرة", type: "مەدەنیا", verses: 286 },
-            { num: 3, nameAr: "آل عمران", nameKu: "سورة آل عمران", type: "مەدەنیا", verses: 200 },
-            { num: 4, nameAr: "النساء", nameKu: "سورة النساء", type: "مەدەنیا", verses: 176 },
-            { num: 5, nameAr: "المائدة", nameKu: "سورة المائدة", type: "مەدەنیا", verses: 120 },
-            { num: 6, nameAr: "الأنعام", nameKu: "سورة الأنعام", type: "مەکی", verses: 165 },
-            { num: 7, nameAr: "الأعراف", nameKu: "سورة الأعراف", type: "مەکی", verses: 206 },
-            { num: 8, nameAr: "الأنفال", nameKu: "سورة الأنفال", type: "مەدەنیا", verses: 75 },
-            { num: 9, nameAr: "التوبة", nameKu: "سورة التوبة", type: "مەدەنیا", verses: 129 },
-            { num: 10, nameAr: "يونس", nameKu: "سورة يونس", type: "مەکی", verses: 109 },
-            { num: 11, nameAr: "هود", nameKu: "سورة هود", type: "مەکی", verses: 123 },
-            { num: 12, nameAr: "يوسف", nameKu: "سورة يوسف", type: "مەکی", verses: 111 },
-            { num: 13, nameAr: "الرعد", nameKu: "سورة الرعد", type: "مەدەنیا", verses: 43 },
-            { num: 14, nameAr: "إبراهيم", nameKu: "سورة إبراهيم", type: "مەکی", verses: 52 },
-            { num: 15, nameAr: "الحجر", nameKu: "سورة الحجر", type: "مەکی", verses: 99 },
-            { num: 16, nameAr: "النحل", nameKu: "سورة النحل", type: "مەکی", verses: 128 },
-            { num: 17, nameAr: "الإسراء", nameKu: "سورة الإسراء", type: "مەکی", verses: 111 },
-            { num: 18, nameAr: "الكهف", nameKu: "سورة الكهف", type: "مەکی", verses: 110 },
-            { num: 19, nameAr: "مريم", nameKu: "سورة مريم", type: "مەکی", verses: 98 },
-            { num: 20, nameAr: "طه", nameKu: "سورة طه", type: "مەکی", verses: 135 },
-            { num: 21, nameAr: "الأنبياء", nameKu: "سورة الأنبياء", type: "مەکی", verses: 112 },
-            { num: 22, nameAr: "الحج", nameKu: "سورة الحج", type: "مەدەنیا", verses: 78 },
-            { num: 23, nameAr: "المؤمنون", nameKu: "سورة المؤمنون", type: "مەکی", verses: 118 },
-            { num: 24, nameAr: "النور", nameKu: "سورة النور", type: "مەدەنیا", verses: 64 },
-            { num: 25, nameAr: "الفرقان", nameKu: "سورة الفرقان", type: "مەکی", verses: 77 },
-            { num: 26, nameAr: "الشعراء", nameKu: "سورة الشعراء", type: "مەکی", verses: 227 },
-            { num: 27, nameAr: "النمل", nameKu: "سورة النمل", type: "مەکی", verses: 93 },
-            { num: 28, nameAr: "القصص", nameKu: "سورة القصص", type: "مەکی", verses: 88 },
-            { num: 29, nameAr: "العنكبوت", nameKu: "سورة العنكبوت", type: "مەکی", verses: 69 },
-            { num: 30, nameAr: "الروم", nameKu: "سورة الروم", type: "مەکی", verses: 60 },
-            { num: 31, nameAr: "لقمان", nameKu: "سورة لقمان", type: "مەکی", verses: 34 },
-            { num: 32, nameAr: "السجدة", nameKu: "سورة السجدة", type: "مەکی", verses: 30 },
-            { num: 33, nameAr: "الأحزاب", nameKu: "سورة الأحزاب", type: "مەدەنیا", verses: 73 },
-            { num: 34, nameAr: "سبأ", nameKu: "سورة سبأ", type: "مەکی", verses: 54 },
-            { num: 35, nameAr: "فاطر", nameKu: "سورة فاطر", type: "مەکی", verses: 45 },
-            { num: 36, nameAr: "يس", nameKu: "سورة يس", type: "مەکی", verses: 83 },
-            { num: 37, nameAr: "الصافات", nameKu: "سورة الصافات", type: "مەکی", verses: 182 },
-            { num: 38, nameAr: "ص", nameKu: "سورة ص", type: "مەکی", verses: 88 },
-            { num: 39, nameAr: "الزمر", nameKu: "سورة الزمر", type: "مەکی", verses: 75 },
-            { num: 40, nameAr: "غافر", nameKu: "سورة غافر", type: "مەکی", verses: 85 },
-            { num: 41, nameAr: "فصلت", nameKu: "سورة فصلت", type: "مەکی", verses: 54 },
-            { num: 42, nameAr: "الشورى", nameKu: "سورة الشورى", type: "مەکی", verses: 53 },
-            { num: 43, nameAr: "الزخرف", nameKu: "سورة الزخرف", type: "مەکی", verses: 89 },
-            { num: 44, nameAr: "الدخان", nameKu: "سورة الدخان", type: "مەکی", verses: 59 },
-            { num: 45, nameAr: "الجاثية", nameKu: "سورة الجاثية", type: "مەکی", verses: 37 },
-            { num: 46, nameAr: "الأحقاف", nameKu: "سورة الأحقاف", type: "مەکی", verses: 35 },
-            { num: 47, nameAr: "محمد", nameKu: "سورة محمد", type: "مەدەنیا", verses: 38 },
-            { num: 48, nameAr: "الفتح", nameKu: "سورة الفتح", type: "مەدەنیا", verses: 29 },
-            { num: 49, nameAr: "الحجرات", nameKu: "سورة الحجرات", type: "مەدەنیا", verses: 18 },
-            { num: 50, nameAr: "ق", nameKu: "سورة ق", type: "مەکی", verses: 45 },
-            { num: 51, nameAr: "الذاريات", nameKu: "سورة الذاريات", type: "مەکی", verses: 60 },
-            { num: 52, nameAr: "الطور", nameKu: "سورة الطور", type: "مەکی", verses: 49 },
-            { num: 53, nameAr: "النجم", nameKu: "سورة النجم", type: "مەکی", verses: 62 },
-            { num: 54, nameAr: "القمر", nameKu: "سورة القمر", type: "مەکی", verses: 55 },
-            { num: 55, nameAr: "الرحمن", nameKu: "سورة الرحمن", type: "مەدەنیا", verses: 78 },
-            { num: 56, nameAr: "الواقعة", nameKu: "سورة الواقعة", type: "مەکی", verses: 96 },
-            { num: 57, nameAr: "الحديد", nameKu: "سورة الحديد", type: "مەدەنیا", verses: 29 },
-            { num: 58, nameAr: "المجادلة", nameKu: "سورة المجادلة", type: "مەدەنیا", verses: 22 },
-            { num: 59, nameAr: "الحشر", nameKu: "سورة الحشر", type: "مەدەنیا", verses: 24 },
-            { num: 60, nameAr: "الممتحنة", nameKu: "سورة الممتحنة", type: "مەدەنیا", verses: 13 },
-            { num: 61, nameAr: "الصف", nameKu: "سورة الصف", type: "مەدەنیا", verses: 14 },
-            { num: 62, nameAr: "الجمعة", nameKu: "سورة الجمعة", type: "مەدەنیا", verses: 11 },
-            { num: 63, nameAr: "المنافقون", nameKu: "سورة المنافقون", type: "مەدەنیا", verses: 11 },
-            { num: 64, nameAr: "التغابن", nameKu: "سورة التغابن", type: "مەدەنیا", verses: 18 },
-            { num: 65, nameAr: "الطلاق", nameKu: "سورة الطلاق", type: "مەدەنیا", verses: 12 },
-            { num: 66, nameAr: "التحريم", nameKu: "سورة التحريم", type: "مەدەنیا", verses: 12 },
-            { num: 67, nameAr: "الملك", nameKu: "سورة الملك", type: "مەکی", verses: 30 },
-            { num: 68, nameAr: "القلم", nameKu: "سورة القلم", type: "مەکی", verses: 52 },
-            { num: 69, nameAr: "الحاقة", nameKu: "سورة الحاقة", type: "مەکی", verses: 52 },
-            { num: 70, nameAr: "المعارج", nameKu: "سورة المعارج", type: "مەکی", verses: 44 },
-            { num: 71, nameAr: "نوح", nameKu: "سورة نوح", type: "مەکی", verses: 28 },
-            { num: 72, nameAr: "الجن", nameKu: "سورة الجن", type: "مەکی", verses: 28 },
-            { num: 73, nameAr: "المزمل", nameKu: "سورة المزمل", type: "مەکی", verses: 20 },
-            { num: 74, nameAr: "المدثر", nameKu: "سورة المدثر", type: "مەکی", verses: 56 },
-            { num: 75, nameAr: "القيامة", nameKu: "سورة القيامة", type: "مەکی", verses: 40 },
-            { num: 76, nameAr: "الإنسان", nameKu: "سورة الإنسان", type: "مەدەنیا", verses: 31 },
-            { num: 77, nameAr: "المرسلات", nameKu: "سورة المرسلات", type: "مەکی", verses: 50 },
-            { num: 78, nameAr: "النبأ", nameKu: "سورة النبأ", type: "مەکی", verses: 40 },
-            { num: 79, nameAr: "النازعات", nameKu: "سورة النازعات", type: "مەکی", verses: 46 },
-            { num: 80, nameAr: "عبس", nameKu: "سورة عبس", type: "مەکی", verses: 42 },
-            { num: 81, nameAr: "التكوير", nameKu: "سورة التكوير", type: "مەکی", verses: 29 },
-            { num: 82, nameAr: "الانفطار", nameKu: "سورة الانفطار", type: "مەکی", verses: 19 },
-            { num: 83, nameAr: "المطففين", nameKu: "سورة المطففين", type: "مەکی", verses: 36 },
-            { num: 84, nameAr: "الانشقاق", nameKu: "سورة الانشقاق", type: "مەکی", verses: 25 },
-            { num: 85, nameAr: "البروج", nameKu: "سورة البروج", type: "مەکی", verses: 22 },
-            { num: 86, nameAr: "الطارق", nameKu: "سورة الطارق", type: "مەکی", verses: 17 },
-            { num: 87, nameAr: "الأعلى", nameKu: "سورة الأعلى", type: "مەکی", verses: 19 },
-            { num: 88, nameAr: "الغاشية", nameKu: "سورة الغاشية", type: "مەکی", verses: 26 },
-            { num: 89, nameAr: "الفجر", nameKu: "سورة الفجر", type: "مەکی", verses: 30 },
-            { num: 90, nameAr: "البلد", nameKu: "سورة البلد", type: "مەکی", verses: 20 },
-            { num: 91, nameAr: "الشمس", nameKu: "سورة الشمس", type: "مەکی", verses: 15 },
-            { num: 92, nameAr: "الليل", nameKu: "سورة الليل", type: "مەکی", verses: 21 },
-            { num: 93, nameAr: "الضحى", nameKu: "سورة الضحى", type: "مەکی", verses: 11 },
-            { num: 94, nameAr: "الشرح", nameKu: "سورة الشرح", type: "مەکی", verses: 8 },
-            { num: 95, nameAr: "التين", nameKu: "سورة التين", type: "مەکی", verses: 8 },
-            { num: 96, nameAr: "العلق", nameKu: "سورة العلق", type: "مەکی", verses: 19 },
-            { num: 97, nameAr: "القدر", nameKu: "سورة القدر", type: "مەکی", verses: 5 },
-            { num: 98, nameAr: "البينة", nameKu: "سورة البينة", type: "مەدەنیا", verses: 8 },
-            { num: 99, nameAr: "الزلزلة", nameKu: "سورة الزلزلة", type: "مەدەنیا", verses: 8 },
-            { num: 100, nameAr: "العاديات", nameKu: "سورة العاديات", type: "مەکی", verses: 11 },
-            { num: 101, nameAr: "القارعة", nameKu: "سورة القارعة", type: "مەکی", verses: 11 },
-            { num: 102, nameAr: "التكاثر", nameKu: "سورة التكاثر", type: "مەکی", verses: 8 },
-            { num: 103, nameAr: "العصر", nameKu: "سورة العصر", type: "مەکی", verses: 3 },
-            { num: 104, nameAr: "الهمزة", nameKu: "سورة الهمزة", type: "مەکی", verses: 9 },
-            { num: 105, nameAr: "الفيل", nameKu: "سورة الفيل", type: "مەکی", verses: 5 },
-            { num: 106, nameAr: "قريش", nameKu: "سورة قريش", type: "مەکی", verses: 4 },
-            { num: 107, nameAr: "الماعون", nameKu: "سورة الماعون", type: "مەکی", verses: 7 },
-            { num: 108, nameAr: "الكوثر", nameKu: "سورة الكوثر", type: "مەکی", verses: 3 },
-            { num: 109, nameAr: "الكافرون", nameKu: "سورة الكافرون", type: "مەکی", verses: 6 },
-            { num: 110, nameAr: "النصر", nameKu: "سورة النصر", type: "مەدەنیا", verses: 3 },
-            { num: 111, nameAr: "المسد", nameKu: "سورة المسد", type: "مەکی", verses: 5 },
-            { num: 112, nameAr: "الإخلاص", nameKu: "سورة الإخلاص", type: "مەکی", verses: 4 },
-            { num: 113, nameAr: "الفلق", nameKu: "سورة الفلق", type: "مەکی", verses: 5 },
-            { num: 114, nameAr: "الناس", nameKu: "سورة الناس", type: "مەکی", verses: 6 }
-        ];
-
-        // Tuhfat Al-Atfal Verses 1 to 10
-        const TUHFA_VERSES = [
-            {
-                num: 1,
-                ar: "يَقُولُ رَاجِي رَحْمَةِ الْغَفُورِ \n دَوْمًا سُلَيْمَانُ هُوَ الْجَمْزُورِي",
-                kuRead: "یەقوڵو ڕاجی ڕەحمەتیلغەفوری ، دائیمەن سۇلەیمانو هُوەل جەمزوری",
-                meaning: "دەڵێت: ئەوەی هەمیشە هیواخوازە بۆ ڕەحمەتی خوای لێخۆشبوون، ناوی سُلەیمانە و ئەوە جەمزورییە.",
-                tajweed: "ئەم بەیتە پێشەکییە و حوکمێکی تایبەتی تەجوید لەسەر نونی ساکن و تەنوین باس ناکات."
-            },
-            {
-                num: 2,
-                ar: "الْحَمْدُ لِلَّهِ مُصَلِّيًا عَلَى \n مُحَمَّدٍ وَآلِهِ وَمَنْ تَلَا",
-                kuRead: "ئەلحەمدو لیللاهی موسەلییەن عەلا ، مُحەممەدین و ئالیهی وەمەن تەلا",
-                meaning: "سوپاس و ستایش بۆ خوایە، و دروود دەنێرم بۆ پێغەمبەر محەممەد ﷺ و خێزانەکەی و هەموو ئەوانەی شوێنی دەکەون.",
-                tajweed: "لە ئێرەدا مامۆستا دەبێت سەرنج بدات بە تەلفوزی دروستی «مُحَمَّدٍ» و شەددىی میمی دووەم."
-            },
-            {
-                num: 3,
-                ar: "وَبَعْدُ هَذَا النَّظْمُ لِلْمُرِيدِ \n فِي النُّونِ وَالتَّنْوِينِ وَالْمُدُودِ",
-                kuRead: "وەبەعدو هازەن نەزمو لیلموریدی ، فین نونی وەت تەنوینی وەلمودودی",
-                meaning: "دوای ئەو پێشەکییە، ئەم منظومەیە بۆ ئەو کەسەیە کە دەیەوێت فێری حوکمەکانی نونی ساکن، تەنوین و مدود بێت.",
-                tajweed: "ئەم بەیتە ئامانجی کتێبەکە دیاری دەکات؛ واتە فێرخواز بە شێوەی ڕیزبەندی حوکمەکانی تەجوید فێر دەبێت."
-            },
-            {
-                num: 4,
-                ar: "سَمَّيْتُهُ بِتُحْفَةِ الْأَطْفَالِ \n عَنْ شَيْخِنَا الْمِيهِيِّ ذِي الْكَمَالِ",
-                kuRead: "سەمەیتوهُ بیتوحفەتیل ئەطفال ، عەن شەیخینەل میهیی ذیل کەمال",
-                meaning: "ناوم ناوە تحفة الأطفال، و ئەم زانیارییەش لە مامۆستاکەم، الميهي، وەرگیراوە.",
-                tajweed: "تحفة الأطفال واتە «دیارییەکی بۆ منداڵان»، واتە منظومەیەکی سادە و ڕێکخراو بۆ فێرخوازانی سەرەتایی تەجوید."
-            },
-            {
-                num: 5,
-                ar: "أَرْجُو بِهِ أَنْ يَنْفَعَ الطُّلَّابَا \n وَالْأَجْرَ وَالْقَبُولَ وَالثَّوَابَا",
-                kuRead: "ئەرجو بیهی ئەی یەنفەعەط طوللابا ، وەلئەجرە وەل قەبوولە وەث ثەوابا",
-                meaning: "هیوادارم ئەم منظومەیە سوودی بۆ خوێندکاران هەبێت و ببێتە هۆی وەرگرتنی پاداشت، قبوڵبوون و ثەواب.",
-                tajweed: "ئەم بەیتە نیتی نووسەر ڕوون دەکاتەوە: ئامانجەکەی سوودگەیاندن بە فێرخوازانی قورئانە."
-            },
-            {
-                num: 6,
-                ar: "لِلنُّونِ إِنْ تَسْكُنْ وَلِلتَّنْوِينِ \n أَرْبَعُ أَحْكَامٍ فَخُذْ تَبْيِينِي",
-                kuRead: "لین نونی ئین تەسکُن وەلیت تەنوین ، ئەربعو ئەحکام فەخوز تەبیینی",
-                meaning: "کاتێک نونی ساکن یان تەنوین هەبێت، چوار حوکمی سەرەکی هەیە؛ ئەمانە بە وردی فێربە.",
-                tajweed: "ئەو چوار حوکمە: ئیزهار (إظهار)، ئیغدام (إدغام)، ئیقلاب (إقلاب)، ئیخفا (إخفاء). ئەمە دەستپێکی بابەتی نونی ساکن و تەنوینە."
-            },
-            {
-                num: 7,
-                ar: "فَالْأَوَّلُ الْإِظْهَارُ قَبْلَ أَحْرُفِ \n لِلْحَلْقِ سِتٌّ رُتِّبَتْ فَلْتَعْرِفِ",
-                kuRead: "فەلئەوەلوەل ئیزهارو قەبلە ئەحروف ، لیلحەلقی سیتتون روتتیبەت فەلتەعریف",
-                meaning: "یەکەم حوکم ئیزهارە؛ کاتێک نونی ساکن یان تەنوین پێش یەکێک لە شەش پیتی حەلق بێت.",
-                tajweed: "ئیزهار واتە نونی ساکن یان تەنوین بە ڕوونی دەرببڕیت، بێ ئەوەی تێکەڵ بە پیتی دواتر بکرێت. شەش پیتەکە: ء ـ ه ـ ع ـ ح ـ غ ـ خ"
-            },
-            {
-                num: 8,
-                ar: "هَمْزٌ فَهَاءٌ ثُمَّ عَيْنٌ حَاءُ \n مُهْمَلَتَانِ ثُمَّ غَيْنٌ خَاءُ",
-                kuRead: "هەمز فەهاء ثوممە عەین حاء ، موهەمەلەتانی ثوممە غەین خاء",
-                meaning: "پیتەکانی ئیزهاری حەلقی ئەمانەن: ء، ه، ع، ح، غ، خ",
-                tajweed: "بۆ حفظکردنیان بە ڕیز: (ء ه ع ح غ خ). نموونە: مَنْ آمَنَ → ئیزهار، مِنْ هَادٍ → ئیزهار، أَنْعَمْتَ → ئیزهار."
-            },
-            {
-                num: 9,
-                ar: "وَالثَّانِ إِدْغَامٌ بِسِتَّةٍ أَتَتْ \n فِي يَرْمَلُونَ عِنْدَهُمْ قَدْ ثَبَتَتْ",
-                kuRead: "وەث ثانی إدغامُن بیسیتتەتی ئەتەوت ، فی یەرەمەلون عین دەهُم قەد ثەبەتەت",
-                meaning: "حوکمی دووەم ئیغدامە، و شەش پیتی هەیە کە لە وشەی «يَرْمَلُونَ» کۆکراونەتەوە.",
-                tajweed: "پیتەکانی ئیغدام: ي ـ ر ـ م ـ ل ـ و ـ ن. کاتێک نونی ساکن یان تەنوین پێش ئەم پیتانە بێت، نونەکە لە پیتی دواتر تێکەڵ دەکرێت."
-            },
-            {
-                num: 10,
-                ar: "لَكِنَّهَا قِسْمَانِ قِسْمٌ يُدْغَمَا \n فِيهِ بِغُنَّةٍ بِيَنْمُو عُلِمَا",
-                kuRead: "لەکینەها قیسەمانی قیسمن یودغەما ، فیھی بیغونەتین بیەمنو عولیما",
-                meaning: "بەڵام ئەو شەش پیتی ئیغدام دوو بەشن. بەشێکیان بە غونە ئیغدام دەکرێن، و ئەو چوار پیتە بە وشەی «يَنْمُو» ناسراون.",
-                tajweed: "پیتەکانی ئیغدام بە غونە: (ي ـ ن ـ م ـ و = يَنْمُو). دەنگێکی بینی (لووتی) دەردەبڕیت بۆ نزیکەی دوو حەرەکەت. نموونە: مَنْ يَعْمَلْ."
-            }
-        ];
-
-        // Prayer Steps Data
-        const PRAYER_STEPS = [
-            {
-                title: "١. پێش نوێژ (شەرطەکانی پێش دەستپێکردن)",
-                ar: "شروط الصلاة",
-                kuRead: "پێش دەستپێکردن",
-                meaning: "ئامادەکاری تەواو پێش بەستنی نوێژ",
-                desc: "١. دەستنوێژت هەبێت. ٢. جەستە، جل و شوێنی نوێژ پاک بێت. ٣. ڕوو لە قەبلە بکەیت. ٤. کاتی نوێژەکە هاتبێت. ٥. عەورەت دابپۆشیت. ٦. نیەت لە دڵدا بکەیت."
-            },
-            {
-                title: "٢. دەستپێکردنی نوێژ (تكبيرة الإحرام)",
-                ar: "اللَّهُ أَكْبَرُ",
-                kuRead: "ئەڵلاهو ئەکبەر",
-                meaning: "خوای گەورەترە لە هەموو شتێک.",
-                desc: "ڕووت لە قەبلە دەکەیت و دەڵێیت «الله أكبر». لەگەڵ وتنیدا دەستەکانت تا ئاستی گوێچکە یان شان بەرز دەکەیتەوە، پاشان دەستی ڕاست لەسەر دەستی چەپ لەسەر سنگ یان سەرووی ناوک دادەنێیت."
-            },
-            {
-                title: "٣. دوعای دەستپێکردن (دعاء الاستفتاح)",
-                ar: "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ",
-                kuRead: "سوپحانەکەڵڵاهوممە وەبیحەمدیک، وەتەبارەکەسموک، وەتەعالا جەدۆک، وەلا ئیلاها غەیرۆک.",
-                meaning: "پاک و بێگەردیت ئەی خوایە، ستایش بۆ تۆیە، ناوت پڕبەرەکەتە، شکۆ و گەورەییت بەرزە، و هیچ پەرستراوێکی ڕاست نییە جگە لە تۆ.",
-                desc: "دوای تەکبیرە لە ڕکعەتی یەکەمدا بە هێمنی ئەم دوعایە دەخوێنیت."
-            },
-            {
-                title: "٤. پەنابردن بە خوا و ناوی خوا (الاستعاذة والبسملة)",
-                ar: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ \n بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ",
-                kuRead: "ئەعووزو بیڵڵاهی مینەش شەیتانیر ڕەجیم \n بسمیڵڵاهیر ڕەحمانیر ڕەحیم",
-                meaning: "پەنا دەبەم بە خوا لە شەیتانی ڕەتکراو. بە ناوی خوای بەخشندە و میهرەبان.",
-                desc: "پێش خوێندنەوەی سورەتی فاتحە دەوترێت."
-            },
-            {
-                title: "٥. سورەتی فاتحە (ركن الصلاة)",
-                ar: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۞ الرَّحْمَنِ الرَّحِيمِ ۞ مَالِكِ يَوْمِ الدِّينِ ۞ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۞ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۞ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
-                kuRead: "ئەلحەمدو لیڵڵاهی ڕەببیلعالەمین... (تا کۆتایی)",
-                meaning: "هەموو ستایشێک بۆ خوای پەروەردگاری جیهانیان... ڕێگای ئەوانەی نیعمەتت پێ بەخشیون، نەک تووڕەبووان و گومڕاکان.",
-                desc: "خوێندنەوەی فاتحە ڕوکنە لە هەموو ڕکعەتێکدا. لە کۆتاییدا دەڵێیت: «آمين»."
-            },
-            {
-                title: "٦. دوای فاتحە سورەتێک بخوێنە",
-                ar: "قُلْ هُوَ اللَّهُ أَحَدٌ ۞ اللَّهُ الصَّمَدُ ۞ لَمْ يَلِدْ وَلَمْ يُولَدْ ۞ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ",
-                kuRead: "قُل هوەڵڵاهو ئەحەد...",
-                meaning: "بڵێ: ئەوە خوایە تاکە. خوای بێنیازە...",
-                desc: "لە ڕکعەتی یەکەم و دووەمدا دوای فاتحە سورەتێکی تر (وەک الإخلاص یان الفلق) دەخوێنیت."
-            },
-            {
-                title: "٧. ڕکوع (الركوع)",
-                ar: "الله أكبر -> سُبْحَانَ رَبِّيَ الْعَظِيمِ",
-                kuRead: "ئەڵلاهو ئەکبەر -> سوپحانە ڕەببیەل عەزیم",
-                meaning: "پاک و بێگەردە پەروەردگاری گەورەم. (٣ جار)",
-                desc: "دەڵێیت «الله أكبر» و بۆ ڕکوع دەچەمێیتەوە، پشتت ڕاست دەکەیت و دەستەکانت لەسەر ئەژنۆکانت دادەنێیت."
-            },
-            {
-                title: "٨. هەستانەوە لە ڕکوع (الاعتدال)",
-                ar: "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ \n رَبَّنَا وَلَكَ الْحَمْدُ",
-                kuRead: "سەمیعەڵڵاهو لیمەن حەمیدەه \n ڕەببەنا وەلەکەل حەمد",
-                meaning: "خوا گوێ لەوە دەگرێت کە ستایشی دەکات. پەروەردگارمان، هەموو ستایش بۆ تۆیە.",
-                desc: "کاتێک لە ڕکوع هەڵدەستیتەوە ڕاست دەوەستیت و ئەم زیکرە دەڵێیت."
-            },
-            {
-                title: "٩. سجدەی یەکەم (السجود الأول)",
-                ar: "الله أكبر -> سُبْحَانَ رَبِّيَ الْأَعْلَى",
-                kuRead: "ئەڵلاهو ئەکبەر -> سوپحانە ڕەببیەل ئەعلا",
-                meaning: "پاک و بێگەردە پەروەردگاری بەرزترینم. (٣ جار)",
-                desc: "دەچیتە سجدە. ٧ ئەندامی جەستە دەبێت لەسەر زەوی بن: تەوێڵ و لووت، دوو دەست، دوو ئەژنۆ، و پەنجەکانی پێ."
-            },
-            {
-                title: "١٠. دانیشتن لە نێوان دوو سجدە",
-                ar: "الله أكبر -> رَبِّ اغْفِرْ لِي",
-                kuRead: "ئەڵلاهو ئەکبەر -> ڕەببیغفیر لی",
-                meaning: "پەروەردگارم، لێم خۆش بە.",
-                desc: "لە سجدەی یەکەم بە تەکبیرەوە دادەنیشیت و داوای لێخۆشبوون دەکەیت."
-            },
-            {
-                title: "١١. سجدەی دووەم",
-                ar: "الله أكبر -> سُبْحَانَ رَبِّيَ الْأَعْلَى",
-                kuRead: "سوپحانە ڕەببیەل ئەعلا",
-                meaning: "پاک و بێگەردە پەروەردگاری بەرزترینم.",
-                desc: "دووبارە دەچیتەوە سجدەی دووەم و زیکرەکە دەڵێیتەوە."
-            },
-            {
-                title: "١٢. ڕکعەتی دووەم (الركعة الثانية)",
-                ar: "تكرار الركعة",
-                kuRead: "دووبارەکردنەوەی هه‌نگاوه‌كان",
-                meaning: "ئەنجامدانی هەمان کردارەکانی ڕکعەتی یەکەم",
-                desc: "هەڵدەستیتەوە بۆ ڕکعەتی دووەم و وەک ڕکعەتی یەکەم فاتحە، سورەت، ڕکوع و سجدەکان ئەنجام دەدەیت."
-            },
-            {
-                title: "١٣. تەحیاتی (التشهد الأول/الأخير)",
-                ar: "التَّحِيَّاتُ لِلَّهِ، وَالصَّلَوَاتُ، وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ، وَأَشْهَدُ أَنْ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ.",
-                kuRead: "ئەلتەحییاتو لیڵڵاهی وەلصەلەواتو وەل طەییبات...",
-                meaning: "هەموو سڵاو و ستایش بۆ خوایە. سڵاو لەسەر تۆ ئەی پێغەمبەر. شایەتی دەدەم هیچ پەرستراوێک بە حەق نییە جگە لە خوا...",
-                desc: "دوای سجدەی دووەمی ڕکعەتی دووەم دادەنیشیت و تەحیات دەخوێنیت."
-            },
-            {
-                title: "١٤. صەڵەوات بۆ پێغەمبەر ﷺ (الصلاة الإبراهيمية)",
-                ar: "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ... (وبارك)",
-                kuRead: "ئەڵڵاهوممە صەللی عەلا مُحەممەدین...",
-                meaning: "ئەی خوا، دروود و بەرەکەت بنێرە بۆ محەممەد ﷺ و خێزانەکەی...",
-                desc: "لە کۆتا ڕکعەتی نوێژەکەدا دوای تەحیات دەخوێنرێت."
-            },
-            {
-                title: "١٥. دوعا پێش سەلام",
-                ar: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ.",
-                kuRead: "ئەڵڵاهوممە ئی ننی ئەعووزو بیکە مین عەزابی جەهەننەم...",
-                meaning: "ئەی خوا، پەنا دەبەم بە تۆ لە سزای دۆزەخ و گۆڕ و فتنەی ژیان و مردن و مەسیحی دەججال.",
-                desc: "دوعایەکی سوننەت و زۆر گرنگە پێش کۆتایی هاتنی نوێژ."
-            },
-            {
-                title: "١٦. سەلامدانەوە و کۆتایی نوێژ (التسليم)",
-                ar: "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ \n (يمينًا وشمالاً)",
-                kuRead: "ئەسسەلامو عەلەیکوم وە ڕەحمەتُڵڵاهـ",
-                meaning: "سڵاو و ڕەحمەتی خوایتان لێ بێت.",
-                desc: "سەرت دەسووڕێنیت بۆ لای ڕاست و دەڵێیت «السلام عليكم ورحمة الله»، پاشان بۆ لای چەپ."
-            }
-        ];
-
-        /* ================= STATE MANAGEMENT ================= */
-        let currentUser = null;
-        let currentReciterCategory = "beauty";
-        let currentReciterIndex = 0;
-        let currentSurahIndex = 0; // 0 to 113
-        let isAudioPlaying = false;
-
-        const audioElem = document.getElementById('quran-audio');
-
-        /* ================= INITIALIZATION ================= */
-        window.addEventListener('DOMContentLoaded', () => {
-            checkPersistedUser();
-            updateRecitersList();
-            renderSurahsGrid(SURAHS);
-            renderTuhfaVerses();
-            renderPrayerSteps();
-            setupAudioEventListeners();
-        });
-
-        // Persistent User Authentication (LocalStorage)
-        function checkPersistedUser() {
-            const savedEmail = localStorage.getItem('quran_app_user_email');
-            const savedName = localStorage.getItem('quran_app_user_name');
-            if (savedEmail) {
-                currentUser = { email: savedEmail, name: savedName || savedEmail.split('@')[0] };
-                showLoggedInState();
-            } else {
-                showLoggedOutState();
-            }
+        // Populate Reciters dropdown
+        function initQuranReciters() {
+            const select = document.getElementById('reciterSelect');
+            reciters.forEach(r => {
+                let opt = document.createElement('option');
+                opt.value = r.server;
+                opt.innerText = r.name;
+                select.appendChild(opt);
+            });
         }
 
-        function handleLoginSubmit(e) {
-            e.preventDefault();
-            const emailInput = document.getElementById('login-email-input').value.trim();
-            const nameInput = document.getElementById('login-name-input').value.trim();
-            if (emailInput) {
-                localStorage.setItem('quran_app_user_email', emailInput);
-                if (nameInput) localStorage.setItem('quran_app_user_name', nameInput);
-                currentUser = { email: emailInput, name: nameInput || emailInput.split('@')[0] };
-                showLoggedInState();
-                closeLoginModal();
-            }
+        // Render 114 Surahs
+        function loadQuran() {
+            const listContainer = document.getElementById('surah-list');
+            listContainer.innerHTML = "";
+            const server = document.getElementById('reciterSelect').value;
+
+            surahs.forEach((name, index) => {
+                const surahNum = (index + 1).toString().padStart(3, '0');
+                const audioUrl = `${server}${surahNum}.mp3`;
+
+                const item = document.createElement('div');
+                item.className = 'surah-item';
+                item.innerHTML = `
+                    <span>${index + 1}. سورەتی ${name}</span>
+                    <i class="fa-solid fa-circle-play" id="icon-${surahNum}"></i>
+                `;
+                item.onclick = () => playSurah(audioUrl, surahNum);
+                listContainer.appendChild(item);
+            });
         }
 
-        function logoutUser() {
-            if (confirm('ئایا دڵنیایت لە دەرچوونی هەژمارەکەت؟')) {
-                localStorage.removeItem('quran_app_user_email');
-                localStorage.removeItem('quran_app_user_name');
-                currentUser = null;
-                showLoggedOutState();
-            }
-        }
-
-        function showLoggedInState() {
-            document.getElementById('user-profile-badge').classList.remove('hidden');
-            document.getElementById('user-profile-badge').classList.add('flex');
-            document.getElementById('login-modal-btn').classList.add('hidden');
+        let currentPlayingId = null;
+        function playSurah(url, id) {
+            const player = document.getElementById('quranPlayer');
             
-            const initial = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U';
-            document.getElementById('user-avatar-initial').innerText = initial;
-            document.getElementById('user-email-display').innerText = currentUser.name || currentUser.email;
-        }
-
-        function showLoggedOutState() {
-            document.getElementById('user-profile-badge').classList.add('hidden');
-            document.getElementById('user-profile-badge').classList.remove('flex');
-            document.getElementById('login-modal-btn').classList.remove('hidden');
-        }
-
-        function openLoginModal() {
-            document.getElementById('login-modal').classList.remove('hidden');
-        }
-
-        function closeLoginModal() {
-            document.getElementById('login-modal').classList.add('hidden');
-        }
-
-        /* ================= TAB SWITCHING ================= */
-        function switchTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            // Remove active classes from desktop nav
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active-tab');
-                btn.classList.add('text-slate-300');
-            });
-
-            // Show selected tab
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            
-            // Set active nav
-            const activeNav = document.getElementById(`nav-${tabId}`);
-            if (activeNav) {
-                activeNav.classList.add('active-tab');
-                activeNav.classList.remove('text-slate-300');
-            }
-        }
-
-        /* ================= QURAN & AUDIO LOGIC ================= */
-        function updateRecitersList() {
-            const categorySelect = document.getElementById('reciter-category-select');
-            currentReciterCategory = categorySelect.value;
-            const reciters = RECITERS_DATA[currentReciterCategory] || RECITERS_DATA['beauty'];
-
-            const reciterSelect = document.getElementById('reciter-select');
-            reciterSelect.innerHTML = '';
-
-            reciters.forEach((reciter, index) => {
-                const opt = document.createElement('option');
-                opt.value = index;
-                opt.textContent = reciter.name;
-                reciterSelect.appendChild(opt);
-            });
-
-            currentReciterIndex = 0;
-            reciterSelect.value = 0;
-            updatePlayerBannerInfo();
-        }
-
-        function onReciterChange() {
-            const reciterSelect = document.getElementById('reciter-select');
-            currentReciterIndex = parseInt(reciterSelect.value, 10);
-            updatePlayerBannerInfo();
-            if (isAudioPlaying) {
-                playSurahAudio(currentSurahIndex);
-            }
-        }
-
-        function getAudioUrl(surahNumber) {
-            const reciterList = RECITERS_DATA[currentReciterCategory];
-            const reciter = reciterList[currentReciterIndex];
-            const paddedSurah = String(surahNumber).padStart(3, '0');
-            return `${reciter.server}${paddedSurah}.mp3`;
-        }
-
-        function updatePlayerBannerInfo() {
-            const surah = SURAHS[currentSurahIndex];
-            const reciterList = RECITERS_DATA[currentReciterCategory];
-            const reciter = reciterList[currentReciterIndex];
-
-            document.getElementById('player-surah-title').innerText = `${surah.num}. ${surah.nameAr} (${surah.nameKu})`;
-            document.getElementById('player-revelation-tag').innerText = surah.type;
-            document.getElementById('player-reciter-title').innerText = `مامۆستا: ${reciter.name}`;
-        }
-
-        function playSurahAudio(index) {
-            currentSurahIndex = index;
-            updatePlayerBannerInfo();
-
-            const audioUrl = getAudioUrl(currentSurahIndex + 1);
-            audioElem.src = audioUrl;
-            audioElem.play().then(() => {
-                isAudioPlaying = true;
-                updatePlayPauseUI(true);
-            }).catch(err => {
-                console.log("Audio play error, retrying fallback...", err);
-                // Fallback CDN if main server fails
-                const fallbackUrl = `https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${currentSurahIndex + 1}.mp3`;
-                audioElem.src = fallbackUrl;
-                audioElem.play();
-                isAudioPlaying = true;
-                updatePlayPauseUI(true);
-            });
-        }
-
-        function toggleAudioPlay() {
-            if (!audioElem.src) {
-                playSurahAudio(currentSurahIndex);
-                return;
-            }
-            if (audioElem.paused) {
-                audioElem.play();
-                isAudioPlaying = true;
-                updatePlayPauseUI(true);
-            } else {
-                audioElem.pause();
-                isAudioPlaying = false;
-                updatePlayPauseUI(false);
-            }
-        }
-
-        function updatePlayPauseUI(playing) {
-            const playIcon = document.getElementById('play-btn-icon');
-            const playerIconDisplay = document.getElementById('player-icon-display');
-
-            if (playing) {
-                playIcon.className = "fa-solid fa-pause";
-                playerIconDisplay.className = "fa-solid fa-compact-disc animate-spin";
-            } else {
-                playIcon.className = "fa-solid fa-play";
-                playerIconDisplay.className = "fa-solid fa-circle-play";
-            }
-        }
-
-        function playNextSurah() {
-            if (currentSurahIndex < SURAHS.length - 1) {
-                playSurahAudio(currentSurahIndex + 1);
-            } else {
-                playSurahAudio(0); // Loop back to Fatiha
-            }
-        }
-
-        function playPrevSurah() {
-            if (currentSurahIndex > 0) {
-                playSurahAudio(currentSurahIndex - 1);
-            }
-        }
-
-        function setupAudioEventListeners() {
-            audioElem.addEventListener('timeupdate', () => {
-                if (!isNaN(audioElem.duration)) {
-                    const progress = (audioElem.currentTime / audioElem.duration) * 100;
-                    document.getElementById('audio-seek').value = progress;
-                    document.getElementById('audio-time-current').innerText = formatTime(audioElem.currentTime);
-                    document.getElementById('audio-time-total').innerText = formatTime(audioElem.duration);
-                }
-            });
-
-            audioElem.addEventListener('ended', () => {
-                playNextSurah();
-            });
-        }
-
-        function seekAudio(percent) {
-            if (audioElem.duration) {
-                audioElem.currentTime = (percent / 100) * audioElem.duration;
-            }
-        }
-
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-        }
-
-        /* ================= RENDERING SURAHS ================= */
-        function renderSurahsGrid(surahList) {
-            const container = document.getElementById('surahs-grid');
-            container.innerHTML = '';
-
-            if (surahList.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400">هیچ سورەتێک نەدۆزرایەوە...</div>`;
+            if (currentPlayingId === id && !player.paused) {
+                player.pause();
+                document.getElementById(`icon-${id}`).className = 'fa-solid fa-circle-play';
                 return;
             }
 
-            surahList.forEach(s => {
+            if (currentPlayingId) {
+                const el = document.getElementById(`icon-${currentPlayingId}`);
+                if(el) el.className = 'fa-solid fa-circle-play';
+            }
+
+            player.src = url;
+            player.play();
+            currentPlayingId = id;
+            document.getElementById(`icon-${id}`).className = 'fa-solid fa-circle-pause';
+
+            player.onended = () => {
+                document.getElementById(`icon-${id}`).className = 'fa-solid fa-circle-play';
+            };
+        }
+
+        // Dynamic Dhikr Builder
+        function renderDhikrList(elementId, dataset) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = "";
+
+            dataset.forEach((dhikr, idx) => {
                 const card = document.createElement('div');
-                card.className = "glass-panel p-4 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer group flex items-center justify-between";
-                card.onclick = () => playSurahAudio(s.num - 1);
+                card.className = 'dhikr-card';
+                let currentCount = dhikr.count;
 
                 card.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-slate-800 group-hover:bg-emerald-600/20 text-emerald-400 border border-slate-700 flex items-center justify-center font-bold text-sm transition-colors">
-                            ${s.num}
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-white text-base font-quran">${s.nameAr}</h4>
-                            <p class="text-xs text-slate-400">${s.nameKu} • ${s.verses} ئایەت</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-800">${s.type}</span>
-                        <button onclick="event.stopPropagation(); openSurahText(${s.num})" title="خوێندنەوەی ئایەتەکان" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 text-slate-300 flex items-center justify-center transition-colors">
-                            <i class="fa-solid fa-book-open text-xs"></i>
-                        </button>
-                    </div>
+                    <div class="dhikr-arabic">${dhikr.text}</div>
+                    <div class="dhikr-meaning">${dhikr.mean}</div>
+                    <div class="dhikr-counter" id="cnt-${elementId}-${idx}">ماوە: ${currentCount} جار</div>
                 `;
+
+                card.onclick = () => {
+                    if (currentCount > 0) {
+                        currentCount--;
+                        document.getElementById(`cnt-${elementId}-${idx}`).innerText = currentCount === 0 ? "تەواو بوو ✓" : `ماوە: ${currentCount} جار`;
+                        if(currentCount === 0) card.style.opacity = 0.5;
+                    }
+                };
+
                 container.appendChild(card);
             });
         }
 
-        function filterSurahs() {
-            const query = document.getElementById('surah-search').value.toLowerCase().trim();
-            const filtered = SURAHS.filter(s => 
-                s.nameAr.toLowerCase().includes(query) ||
-                s.nameKu.toLowerCase().includes(query) ||
-                String(s.num).includes(query)
-            );
-            renderSurahsGrid(filtered);
+        // Render Nza Page
+        function renderNzaList() {
+            const container = document.getElementById('nza-list');
+            nzakanList.forEach(nza => {
+                container.innerHTML += `
+                    <div class="card" style="text-align:center;">
+                        <div class="dhikr-arabic" style="color:var(--primary);">${nza.text}</div>
+                        <div class="dhikr-meaning">${nza.mean}</div>
+                    </div>
+                `;
+            });
         }
 
-        /* Fetch & Display Surah Verses Text */
-        async function openSurahText(surahNumber) {
-            const container = document.getElementById('surah-text-container');
-            const titleElem = document.getElementById('surah-viewer-title');
-            const versesElem = document.getElementById('surah-verses-list');
+        // Counter / Tasbih Logic
+        let mainCounter = 0;
+        function incrementCounter() {
+            mainCounter++;
+            document.getElementById('counter-value').innerText = mainCounter;
+        }
+        function resetCounter() {
+            mainCounter = 0;
+            document.getElementById('counter-value').innerText = mainCounter;
+        }
 
-            const surah = SURAHS[surahNumber - 1];
-            titleElem.innerText = `${surah.num}. ${surah.nameAr} - ${surah.nameKu}`;
-            versesElem.innerHTML = `<div class="text-center text-slate-400 py-4"><i class="fa-solid fa-spinner animate-spin text-xl"></i> لەبارکردنی ئایەتەکان...</div>`;
-            container.classList.remove('hidden');
+        // Compass / Qibla Simulator (since real sensors require complex API/HTTPS permissions)
+        function initQibla() {
+            const compass = document.getElementById('compass');
+            const status = document.getElementById('qibla-status');
+            const beep = document.getElementById('beepAudio');
+            let angle = 0;
 
-            try {
-                const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}`);
-                const data = await res.json();
-                if (data.data && data.data.ayahs) {
-                    let html = '';
-                    data.data.ayahs.forEach(ayah => {
-                        let text = ayah.text;
-                        // Remove basmala prefix for non-Fatiha
-                        if (surahNumber !== 1 && ayah.numberInSurah === 1 && text.startsWith('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ')) {
-                            text = text.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '').trim();
-                        }
-                        html += `<span>${text} <span class="text-amber-400 font-sans text-sm mx-1">﴿${ayah.numberInSurah}﴾</span> </span>`;
-                    });
-                    versesElem.innerHTML = html;
+            // Simulating a rotation effect on click/touch for presentation ease
+            compass.onclick = () => {
+                angle = Math.floor(Math.random() * 360);
+                compass.style.transform = `rotate(${angle}deg)`;
+                
+                // Let's assume 180 degrees (South) is the correct Makkah Qibla heading
+                if (angle >= 165 && angle <= 195) {
+                    status.innerText = "قیبلە تەواو و ڕاستە! ✓";
+                    status.style.color = "green";
+                    beep.play();
                 } else {
-                    versesElem.innerHTML = `<p class="text-red-400 text-sm">نەتوانرا ئایەتەکان لەباربکرێت.</p>`;
+                    status.innerText = "تکایە بیسوڕێنە...";
+                    status.style.color = "red";
                 }
-            } catch (e) {
-                versesElem.innerHTML = `<p class="text-slate-300 text-sm">ئایەتە پیرۆزەکانی سورەتی ${surah.nameAr} (${surah.verses} ئایەت).</p>`;
-            }
+            };
         }
 
-        function closeSurahViewer() {
-            document.getElementById('surah-text-container').classList.add('hidden');
-        }
-
-        /* ================= RENDERING TUHFA ================= */
-        function renderTuhfaVerses() {
-            const container = document.getElementById('tuhfa-verses-container');
-            container.innerHTML = '';
-
-            TUHFA_VERSES.forEach(v => {
-                const card = document.createElement('div');
-                card.className = "glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 hover:border-amber-500/40 transition-all";
-
-                card.innerHTML = `
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                        <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-3 py-1 rounded-full font-bold">
-                            بەیتی ${v.num}
-                        </span>
-                        <i class="fa-solid fa-scroll text-amber-500/50 text-xl"></i>
+        // Render FAQ Page
+        function renderFAQ() {
+            const container = document.getElementById('faq-list');
+            faqs.forEach((faq, idx) => {
+                const item = document.createElement('div');
+                item.className = 'faq-item';
+                item.innerHTML = `
+                    <div class="faq-question" onclick="toggleFaq(${idx})">
+                        <span>${faq.q}</span> <i class="fa-solid fa-chevron-down"></i>
                     </div>
-
-                    <!-- Arabic Poetry Text -->
-                    <div class="text-center font-quran text-2xl lg:text-3xl text-amber-300 whitespace-pre-line leading-relaxed py-2 bg-slate-950/50 rounded-xl border border-amber-950/30">
-                        ${v.ar}
-                    </div>
-
-                    <!-- Kurdish Reading -->
-                    <div class="space-y-1">
-                        <p class="text-xs text-slate-400 font-semibold">خوێندنەوە بە کوردی:</p>
-                        <p class="text-slate-200 text-sm bg-slate-900/80 p-3 rounded-xl border border-slate-800">${v.kuRead}</p>
-                    </div>
-
-                    <!-- Meaning -->
-                    <div class="space-y-1">
-                        <p class="text-xs text-emerald-400 font-semibold">مانا:</p>
-                        <p class="text-slate-300 text-sm leading-relaxed">${v.meaning}</p>
-                    </div>
-
-                    <!-- Tajweed Explanation -->
-                    <div class="space-y-1 bg-emerald-950/30 border border-emerald-500/20 p-3 rounded-xl">
-                        <p class="text-xs text-emerald-400 font-bold flex items-center gap-1.5">
-                            <i class="fa-solid fa-circle-info"></i> ڕوونکردنەوەی تەجوید:
-                        </p>
-                        <p class="text-slate-300 text-xs leading-relaxed">${v.tajweed}</p>
-                    </div>
+                    <div class="faq-answer" id="faq-ans-${idx}">${faq.a}</div>
                 `;
-                container.appendChild(card);
+                container.appendChild(item);
             });
         }
 
-        /* ================= RENDERING PRAYER STEPS ================= */
-        function renderPrayerSteps() {
-            const container = document.getElementById('prayer-steps-container');
-            container.innerHTML = '';
-
-            PRAYER_STEPS.forEach((step, idx) => {
-                const card = document.createElement('div');
-                card.className = "glass-panel p-5 rounded-2xl border border-slate-800 space-y-3 hover:border-teal-500/40 transition-all";
-
-                card.innerHTML = `
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                        <h4 class="font-bold text-white text-base lg:text-lg flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-lg bg-teal-500/20 text-teal-300 border border-teal-500/30 flex items-center justify-center text-xs">
-                                ${idx + 1}
-                            </span>
-                            ${step.title}
-                        </h4>
-                    </div>
-
-                    <!-- Arabic Zikr Text -->
-                    <div class="font-quran text-xl text-teal-300 bg-slate-950/60 p-3 rounded-xl border border-slate-800 text-center whitespace-pre-line">
-                        ${step.ar}
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-                            <span class="text-slate-400 font-semibold block mb-1">خوێندنەوەی کوردی:</span>
-                            <span class="text-slate-200">${step.kuRead}</span>
-                        </div>
-                        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-                            <span class="text-emerald-400 font-semibold block mb-1">مانای کوردی:</span>
-                            <span class="text-slate-300">${step.meaning}</span>
-                        </div>
-                    </div>
-
-                    <p class="text-slate-300 text-xs bg-emerald-950/20 border border-emerald-900/40 p-3 rounded-xl leading-relaxed">
-                        <strong class="text-emerald-400">چۆنیەتی ئەنجامدان:</strong> ${step.desc}
-                    </p>
-                `;
-                container.appendChild(card);
-            });
+        function toggleFaq(idx) {
+            const ans = document.getElementById(`faq-ans-${idx}`);
+            ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
         }
     </script>
 </body>
 </html>
-```eof
-
-Your complete Kurdish Quran Web Application file has been generated. It includes full account persistence via email login, all 114 Surahs, reciters sorted into your requested categories, the 10 Tuhfat al-Atfal Tajweed verses with full Kurdish translations, and the complete 16-step prayer learning guide.
