@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پڕۆژەی ئیسلامی</title>
+    <title>Nexuim.Official - ئەپڵیکەیشنی ئیسلامی</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -125,10 +125,8 @@
             border-radius: 8px;
             border: 1px solid var(--primary-light);
             margin-bottom: 15px;
-            font-size: 15px;
+            font-size: 16px;
             background: white;
-            color: #333;
-            font-weight: bold;
         }
 
         .surah-item {
@@ -306,31 +304,6 @@
             text-align: center;
         }
 
-        /* Sub Navigation for Quran & Tafseer */
-        .sub-nav {
-            display: flex;
-            background: #e8f5e9;
-            border-radius: 12px;
-            padding: 5px;
-            margin-bottom: 15px;
-        }
-
-        .sub-tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            color: var(--primary);
-            transition: background 0.3s;
-        }
-
-        .sub-tab.active {
-            background: var(--primary);
-            color: white;
-        }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -340,12 +313,13 @@
 <body>
 
     <header>
-        <h1 id="app-title">پڕۆژەی ئیسلامی</h1>
-        <p>قورئانی پیرۆز، تەفسیر و زیکرەکان</p>
+        <h1 id="app-title">Nexuim.Official</h1>
+        <p>قورئانی پیرۆز و زیکرەکان</p>
     </header>
 
     <div class="container">
         
+        <!-- HOME PAGE -->
         <div id="page-home" class="page active">
             <div class="main-menu">
                 <div class="menu-btn" onclick="navigateTo('page-bayanian')">
@@ -391,26 +365,17 @@
             </div>
         </div>
 
+        <!-- QURAN PAGE -->
         <div id="page-quran" class="page">
-            <div class="sub-nav">
-                <div class="sub-tab active" id="tab-tilawa" onclick="switchQuranTab('tilawa')">دەنگی قورئان</div>
-                <div class="sub-tab" id="tab-tafseer" onclick="switchQuranTab('tafseer')">تەفسیری سورەتەکان</div>
-            </div>
-
-            <div id="section-tilawa">
-                <select id="reciterSelect" class="reciter-select" onchange="loadQuran()">
-                    </select>
-                <div id="surah-list" class="card" style="padding:0;"></div>
-            </div>
-
-            <div id="section-tafseer" style="display: none;">
-                <label style="font-weight: bold; margin-bottom: 5px; display: block;">مامۆستا/زانای تەفسیر هەڵبژێرە (۸۰ زانای کورد و عەرەب):</label>
-                <select id="mufassirSelect" class="reciter-select">
-                    </select>
-                <div id="tafseer-surah-list" class="card" style="padding:0;"></div>
+            <select id="reciterSelect" class="reciter-select" onchange="loadQuran()">
+                <!-- Populated dynamically -->
+            </select>
+            <div id="surah-list" class="card" style="padding:0;">
+                <!-- 114 Surahs loaded here -->
             </div>
         </div>
 
+        <!-- BAYANIAN PAGE -->
         <div id="page-bayanian" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <h2>زیکرەکانی بەیانیان</h2>
@@ -418,12 +383,14 @@
             <div id="bayanian-list"></div>
         </div>
 
+        <!-- EWARAN PAGE -->
         <div id="page-ewaran" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <h2>زیکرەکانی ئێواران</h2><br>
             <div id="ewaran-list"></div>
         </div>
 
+        <!-- DWAY NWEZH PAGE -->
         <div id="page-dway-nwezh" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <h2>زیکرەکانی دوای نوێژەکان</h2>
@@ -431,6 +398,7 @@
             <div id="dway-nwezh-list"></div>
         </div>
 
+        <!-- KHEWTAN PAGE -->
         <div id="page-khewtan" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <h2>زیکر و سوننەتەکانی پێش خەوتن</h2>
@@ -438,18 +406,21 @@
             <div id="khewtan-list"></div>
         </div>
 
+        <!-- ZIKRI JOWRA JOWR -->
         <div id="page-jwenrajwen" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <h2>زیکری جۆراوجۆر</h2><br>
             <div id="jora-list"></div>
         </div>
 
+        <!-- NZAKAN PAGE -->
         <div id="page-nzakan" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <h2>نزای جۆراوجۆر</h2><br>
             <div id="nza-list"></div>
         </div>
 
+        <!-- ZHMIRER PAGE -->
         <div id="page-zhmirer" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <div class="card counter-section">
@@ -461,6 +432,7 @@
             </div>
         </div>
 
+        <!-- QIBLA PAGE -->
         <div id="page-qibla" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <div class="card" style="text-align: center;">
@@ -474,6 +446,7 @@
             </div>
         </div>
 
+        <!-- FAQ PAGE -->
         <div id="page-faq" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <div class="card">
@@ -482,6 +455,7 @@
             </div>
         </div>
 
+        <!-- DESTNISHANKRAW PAGE -->
         <div id="page-destnishankraw" class="page">
             <button class="back-btn" onclick="navigateTo('page-home')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
             <div class="card" style="text-align: center; padding: 40px 20px;">
@@ -492,6 +466,7 @@
 
     </div>
 
+    <!-- BOTTOM NAVIGATION BAR -->
     <div class="nav-bar">
         <div class="nav-item active" id="nav-home" onclick="navigateTo('page-home')">
             <i class="fa-solid fa-house"></i>
@@ -499,7 +474,7 @@
         </div>
         <div class="nav-item" id="nav-quran" onclick="navigateTo('page-quran')">
             <i class="fa-solid fa-book-quran"></i>
-            <span>قورئان و تەفسیر</span>
+            <span>قورئان</span>
         </div>
     </div>
 
@@ -516,4 +491,280 @@
             { id: "6", name: "سعد الغامدي", server: "https://server7.mp3quran.net/s_gmd/" },
             { id: "7", name: "أحمد العجمي", server: "https://server10.mp3quran.net/ajm/" },
             { id: "8", name: "ياسر الدوسري", server: "https://server11.mp3quran.net/yasser/" },
-            { id:
+            { id: "9", name: "ناصر القطامي", server: "https://server6.mp3quran.net/qtm/" },
+            { id: "10", name: "فارس عباد", server: "https://server8.mp3quran.net/frs_a/" },
+            { id: "11", name: "أبو بكر الشاطري", server: "https://server11.mp3quran.net/shatri/" },
+            { id: "12", name: "خالد الجليل", server: "https://server10.mp3quran.net/jleel/" },
+            { id: "13", name: "محمد الحسينان", server: "https://server8.mp3quran.net/hosn/" },
+            { id: "14", name: "محمود خليل الحصري", server: "https://server13.mp3quran.net/husr/" },
+            { id: "15", name: "محمد صديق المنشاوي", server: "https://server10.mp3quran.net/minsh/" },
+            { id: "16", name: "إدريس أبكر", server: "https://server6.mp3quran.net/abkr/" },
+            { id: "17", name: "خالد القحطاني", server: "https://server10.mp3quran.net/qah/" },
+            { id: "18", name: "صلاح بو خاطر", server: "https://server8.mp3quran.net/bu_khatr/" },
+            { id: "19", name: "عبد الله عواد الجهني", server: "https://server13.mp3quran.net/jhn/" },
+            { id: "20", name: "علي الحذيفي", server: "https://server9.mp3quran.net/huzaifi/" },
+            { id: "21", name: "محمد أيوب", server: "https://server8.mp3quran.net/ayoub/" },
+            { id: "22", name: "عبد الله الخياط", server: "https://server12.mp3quran.net/khayat/" },
+            { id: "23", name: "عادل الكلباني", server: "https://server8.mp3quran.net/klb/" },
+            { id: "24", name: "محمود علي البنا", server: "https://server8.mp3quran.net/banna/" },
+            { id: "25", name: "مشاري العفاسي (رواية ورش)", server: "https://server8.mp3quran.net/afs_warsh/" },
+            { id: "26", name: "علي جابر", server: "https://server11.mp3quran.net/jabr/" },
+            { id: "27", name: "عبد الرشيد صوفي", server: "https://server9.mp3quran.net/sofi/" },
+            { id: "28", name: "محمد جبريل", server: "https://server8.mp3quran.net/jbrl/" },
+            { id: "29", name: "مصطفى إسماعيل", server: "https://server8.mp3quran.net/mustafa/" },
+            { id: "30", name: "عبد المحسن القاسم", server: "https://server8.mp3quran.net/qasm/" }
+        ];
+
+        const surahs = [
+            "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس", "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"
+        ];
+
+        // Updated Data Arrays Exactly As Provided
+        const bayanianDhikr = [
+            { text: "آیەتی کورسی", detail: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ، لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ...", mean: "مانا: الله تەنها پەرستراوی ڕاستە، زیندوو و بەڕێوەبەری هەموو شتەکانە؛ نە خەوتن و نە نووستن دەیگرێت.", count: 1 },
+            { text: "سورەتی ئیخلاص", detail: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ", mean: "مانا: الله یەکتایە، هەمووان پێویستیان بەوەیە، نە منداڵی هەیە و نە لە دایک بووە، و هیچ هاوشێوەیەکی نییە.", count: 3 },
+            { text: "سورەتی فەلەق", detail: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ", mean: "مانا: پەنای دەبەم بۆ پەروەردگاری بەیانی، لە شەڕی هەموو دروستکراوەکان و لە شەڕی تاریکی و حسود.", count: 3 },
+            { text: "سورەتی ناس", detail: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ", mean: "مانا: پەنای دەبەم بۆ پەروەردگار و پادشای مرۆڤەکان، لە شەڕی وسواس و ئەوەی خراپە دەخاتە دڵی مرۆڤەکان.", count: 3 },
+            { text: "زیکری پاراستن", detail: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ", mean: "مانا: بە ناوی الله؛ ئەوەی بە ناوی ئەو هیچ شتێک لە زەوی و ئاسمان زیانم پێ ناگەیەنێت، و ئەو بیسەر و زانایە.", count: 3 },
+            { text: "ڕەزامەندی بە ئیسلام", detail: "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا", mean: "مانا: ڕازیم بە الله وەک پەروەردگارم، بە ئیسلام وەک دینم، و بە محەممەد ﷺ وەک پێغەمبەرەکەم.", count: 3 },
+            { text: "سەیدول ئیستغفار", detail: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.", mean: "مانا: خودایە، تۆ پەروەردگارمی و من بەندەتم. دان بە نیعمەتەکانت و گوناهەکانم دادەنێم، کەواتە لێم خۆش ببە، چونکە جگە لە تۆ هیچ کەسێک گوناه نابەخشێت.", count: 1 },
+            { text: "تەسبیح", detail: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", mean: "مانا: پاک و بێگەردە الله و ستایش بۆ ئەوە.", count: 100 },
+            { text: "تەوحید", detail: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ", mean: "مانا: هیچ پەرستراوی ڕاست نییە جگە لە الله، بە تەنها و بێ هاوبەشە. هەموو دەسەڵات و ستایش هی ئەوە و ئەو بەسەر هەموو شتێکدا توانادارە.", count: 10 },
+            { text: "پەنابردن", detail: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ", mean: "مانا: پەنای دەبەم بە وشە تەواوەکانی الله، لە شەڕی هەموو ئەو شتانەی دروستی کردووە.", count: 3 },
+            { text: "داوای عافیەت", detail: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ", mean: "مانا: خودایە، داوای لێخۆشبوون و تەندروستی و سەلامەتی لە دنیا و قیامەتت لێ دەکەم.", count: 1 },
+            { text: "داوای زانست و ڕزق", detail: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا", mean: "مانا: خودایە، داوای زانستی سوودبەخش، ڕزقی پاک و کردەوەی قبوڵکراو لێ دەکەم.", count: 1 },
+            { text: "درود لەسەر پێغەمبەر ﷺ", detail: "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ ﷺ", mean: "مانا: خودایە، سەلاوات و سەلام بنێرە لەسەر پێغەمبەرمان محەممەد ﷺ.", count: 10 }
+        ];
+
+        const ewaranDhikr = [
+            { text: "آیەتی کورسی", detail: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...", mean: "مانا: خودای گەورە تەنها ئەوەیە کە شایستەی پەرستنییە، زیندوو و بەڕێوەبەری هەموو شتەکانە.", count: 1 },
+            { text: "سورەتی ئیخلاص", detail: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ", mean: "مانا: بڵێ: ئەوە الله یەکتایە، هەمووان پێویستیان بەوەیە، نە منداڵی هەیە و نە لە دایک بووە، و هیچ کەسێک هاوشێوەی نییە.", count: 3 },
+            { text: "سورەتی فەلەق", detail: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ", mean: "مانا: پەنای دەبەم بۆ پەروەردگاری بەیانی، لە شەڕی هەموو ئەو شتانەی دروستی کردووە و لە شەڕی تاریکی و حسود.", count: 3 },
+            { text: "سورەتی ناس", detail: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ", mean: "مانا: پەنای دەبەم بۆ پەروەردگار و پادشای مرۆڤەکان، لە شەڕی ئەوەی خۆی دەشارێتەوە و خراپە دەخاتە دڵی مرۆڤەکان، چ لە جین بێت یان مرۆڤ.", count: 3 },
+            { text: "زیکری پاراستن", detail: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ", mean: "مانا: بە ناوی الله، ئەوەی بە ناوی ئەو هیچ شتێک لە زەوی و ئاسمان زیانم پێ ناگەیەنێت، و ئەو بیسەر و زانایە.", count: 3 },
+            { text: "ڕەزامەندی بە ئیسلام", detail: "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا", mean: "مانا: ڕازیم بە الله وەک پەروەردگارم، بە ئیسلام وەک دینم، و بە محەممەد ﷺ وەک پێغەمبەرەکەم.", count: 3 },
+            { text: "سەیدول ئیستغفار", detail: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ", mean: "مانا: خودایە، تۆ پەروەردگارمی، هیچ پەرستراوێکی ڕاست نییە جگە لە تۆ. تۆ منت دروست کردووە و من بەندەتم. دان بە نیعمەتەکانت دادەنێم و دان بە گوناهەکەم دادەنێم؛ کەواتە لێم خۆش ببە، چونکە هیچ کەسێک گوناهەکان نابەخشێت جگە لە تۆ.", count: 1 },
+            { text: "تەسبیح", detail: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", mean: "مانا: پاک و بێگەردە الله، و ستایش بۆ ئەوە.", count: 100 },
+            { text: "تەوحید", detail: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ", mean: "مانا: هیچ پەرستراوێکی ڕاست نییە جگە لە الله، بە تەنها و هیچ هاوبەشێکی نییە. هەموو دەسەڵات و ستایش هی ئەوە و ئەو بەسەر هەموو شتێکدا توانادارە.", count: 100 },
+            { text: "پەنابردن", detail: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ", mean: "مانا: پەنای دەبەم بە وشە تەواوەکانی الله، لە شەڕی ئەو هەموو شتانەی دروستی کردووە.", count: 3 },
+            { text: "درود لەسەر پێغەمبەر ﷺ", detail: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِيِّنَا مُحَمَّدٍ", mean: "مانا: خودایە، سەلاوات و سەلام و بەرەکەت بنێرە لەسەر پێغەمبەرمان محەممەد ﷺ.", count: 10 }
+        ];
+
+        const dwayNwezhDhikr = [
+            { text: "ئیستغفار", detail: "أَسْتَغْفِرُ اللَّهَ", mean: "مانا: داوای لێخۆشبوون لە الله دەکەم.", count: 3 },
+            { text: "دوعای دوای نوێژ", detail: "اللَّهُمَّ أَنْتَ السَّلَامُ، وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ", mean: "مانا: خودایە، تۆ سەلامەتیت، و سەلامەتی لەلایەن تۆوەیە؛ ئەی خاوەنی شکۆ و ڕێز، پڕبەرەکەتیت.", count: 1 },
+            { text: "آیەتی کورسی", detail: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ، لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ...", mean: "مانا: الله تەنها پەرستراوی ڕاستە، زیندوو و بەڕێوەبەری هەموو شتەکانە.", count: 1 },
+            { text: "تەسبیح", detail: "سُبْحَانَ اللَّهِ", mean: "تەسبیحات", count: 33 },
+            { text: "تەحمید", detail: "الْحَمْدُ لِلَّهِ", mean: "تەحمیدات", count: 33 },
+            { text: "تەکبیر", detail: "اللَّهُ أَكْبَرُ", mean: "تەکبیرات", count: 33 },
+            { text: "کۆتایی تەسبیحات (تەوحید)", detail: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ", mean: "مانا: هیچ پەرستراوی ڕاست نییە جگە لە الله، بە تەنها و بێ هاوبەشە؛ هەموو دەسەڵات و ستایش هی ئەوە و ئەو بەسەر هەموو شتێکدا توانادارە.", count: 1 },
+            { text: "سورەتە کورتەکان (ئیخلاص، فەلەق، ناس)", detail: "قُلْ هُوَ اللَّهُ أَحَدٌ... / قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ... / قُلْ أَعُوذُ بِرَبِّ النَّاسِ...", mean: "دوای نوێژی بەیانی و مەغریب ٣ جار، دوای نوێژەکانی تر ١ جار.", count: 3 },
+            { text: "دوعای داوای یارمەتی", detail: "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ، وَشُكْرِكَ، وَحُسْنِ عِبَادَتِكَ", mean: "مانا: خودایە، یارمەتیم بدە بۆ یادتکردنەوە، سوپاسکردنت و بە جوانی پەرستنت.", count: 1 },
+            { text: "دوعای گشتی", detail: "رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ، وَتُبْ عَلَيْنَا إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ", mean: "مانا: پەروەردگارمان، لێمان وەربگرە، بەڕاستی تۆ بیسەر و زانایت؛ تۆبەمان لێ وەربگرە، بەڕاستی تۆ زۆر تۆبەوەرگر و بەبەزەییت.", count: 1 }
+        ];
+
+        const khewtanDhikr = [
+            { text: "آیەتی کورسی", detail: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ، لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ...", mean: "مانا: الله تەنها پەرستراوی ڕاستە، زیندوو و بەڕێوەبەری هەموو شتەکانە.", count: 1 },
+            { text: "سوڕەتی الإخلاص", detail: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ \n قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ ۝", mean: "پاشان: کفە دەستەکانت بە یەکەوە بگرە، ئەم سێ سوڕەتە بخوێنەوە، پاشان بە دەستەکانت بەسەر هەموو جەستەتدا بێنە؛ ٣ جار دووبارەی بکە.", count: 3 },
+            { text: "سوڕەتی الفلق", detail: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ \n قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ ۝", mean: "پەنابردنە بۆ الله لە هەموو شەڕ و زیانێک.", count: 3 },
+            { text: "سوڕەتی الناس", detail: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ \n قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ ۝", mean: "پەنابردنە بۆ الله لە هەموو شەڕ و زیانێک.", count: 3 },
+            { text: "کۆتایی سورەتی بەقەرە", detail: "آمَنَ الرَّسُولُ بِمَا أُنْزِلَ إِلَيْهِ مِنْ رَبِّهِ... تا کۆتایی سورەکە.", mean: "مانا: باوەڕمان بە الله و فریشتەکان و کتێبەکان و پێغەمبەرەکان هەیە و دەڵێین: «گوێڕایەڵین و داوای لێخۆشبوونت دەکەین، ئەی پەروەردگارمان.»", count: 1 },
+            { text: "تەسبیحی فاطمە - سبحان الله", detail: "سُبْحَانَ اللَّهِ", mean: "مانا: الله پاک و بێگەردە.", count: 33 },
+            { text: "تەسبیحی فاطمە - الحمد لله", detail: "الْحَمْدُ لِلَّهِ", mean: "مانا: هەموو ستایشێک بۆ اللهیە.", count: 33 },
+            { text: "تەسبیحی فاطمە - الله أكبر", detail: "اللَّهُ أَكْبَرُ", mean: "مانا: الله گەورەترە لە هەموو شتێک.", count: 34 },
+            { text: "دوعای خەوتن", detail: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا", mean: "مانا: بە ناوی تۆیە، خودایە، دەمرم و دەژیم.", count: 1 },
+            { text: "دوعای دانانی دەست لە ژێر گۆنە", detail: "اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ", mean: "مانا: خودایە، لە سزاکەت لەو ڕۆژەدا بپارێزە کە بەندەکانت زیندوو دەکەیتەوە.", count: 1 },
+            { text: "پەنابردن بۆ الله", detail: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ", mean: "مانا: پەنای دەبەم بە وشە تەواوەکانی الله، لە شەڕی هەموو ئەو شتانەی دروستی کردووە.", count: 1 },
+            { text: "دوعای خەوتن بە شێوەی تەواو", detail: "اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِيَ إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ، وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ.", mean: "مانا: خودایە، خۆمم سپاردووە بە تۆ، ڕووم کردووەتە تۆ، هەموو کارەکەم سپاردووە بە تۆ و پەنایم بۆ تۆ هێناوە...", count: 1 }
+        ];
+
+        const joraJoraDhikr = [
+            { text: "أَسْتَغْفِرُ اللهَ وَأَتُوبُ إِلَيْهِ", mean: "داوای لێخۆشبوون لە الله دەکەم و تۆبەی بۆ دەکەم.", count: 100 },
+            { text: "سُبْحَانَ اللهِ وَبِحَمْدِهِ", mean: "الله پاکە و ستایش بۆ ئەوە.", count: 100 },
+            { text: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ", mean: "هیچ توانای گۆڕان و هیچ هێزێک نییە جگە بە یارمەتی الله.", count: 100 },
+            { text: "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَىٰ نَبِيِّنَا مُحَمَّدٍ", mean: "سەڵاواتدان لەسەر پێغەمبەر ﷺ", count: 100 }
+        ];
+
+        const nzakanList = [
+            { text: "رَبِّ اغْفِرْ لِي وَارْحَمْنِي وَأَنْتَ خَيْرُ الرَّاحِمِينَ", mean: "پەروەردگارم، لێم خۆش بە و ڕەحمم پێ بکە، تۆ باشترین ڕەحمکەری." },
+            { text: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", mean: "پەروەردگارمان، لە دنیادا خێرمان پێ ببەخشە، لە قیامەتیش خێرمان پێ ببەخشە." },
+            { text: "رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا", mean: "پەروەردگارم، لێم خۆش بە و لە دایک و باوکیشم خۆش بە." }
+        ];
+
+        const faqs = [
+            { q: "ئایا خوێندنەوەی زیکرەکان واجبە؟", a: "نەخێر، سوننەتێکی موئەککەدەیە و پاداشتێکی یەکجار گەورەی هەیە." },
+            { q: "ئایا دەستنوێژ پێویستە بۆ زیکرەکان؟", a: "نەخێر، دەتوانیت بەبێ دەستنوێژیش زیکر بکەیت بەڵام بە دەستنوێژەوە باشترە." },
+            { q: "کەی کاتی گونجاوە بۆ زیکری بەیانیان و ئێواران؟", a: "بەیانیان لە دوای نوێژی بەیانی تا خۆرهەڵات، ئێواران لە دوای نوێژی عەسر تا ئاوابوونی خۆر." }
+        ];
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            if (pageId === 'page-home') document.getElementById('nav-home').classList.add('active');
+            if (pageId === 'page-quran') document.getElementById('nav-quran').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        window.onload = function() {
+            initQuranReciters();
+            loadQuran();
+            renderDhikrList('bayanian-list', bayanianDhikr);
+            renderDhikrList('ewaran-list', ewaranDhikr);
+            renderDhikrList('dway-nwezh-list', dwayNwezhDhikr);
+            renderDhikrList('khewtan-list', khewtanDhikr);
+            renderDhikrList('jora-list', joraJoraDhikr);
+            renderNzaList();
+            renderFAQ();
+            initQibla();
+        };
+
+        function initQuranReciters() {
+            const select = document.getElementById('reciterSelect');
+            reciters.forEach(r => {
+                let opt = document.createElement('option');
+                opt.value = r.server;
+                opt.innerText = r.name;
+                select.appendChild(opt);
+            });
+        }
+
+        function loadQuran() {
+            const listContainer = document.getElementById('surah-list');
+            listContainer.innerHTML = "";
+            const server = document.getElementById('reciterSelect').value;
+
+            surahs.forEach((name, index) => {
+                const surahNum = (index + 1).toString().padStart(3, '0');
+                const audioUrl = `${server}${surahNum}.mp3`;
+
+                const item = document.createElement('div');
+                item.className = 'surah-item';
+                item.innerHTML = `
+                    <span>${index + 1}. سورەتی ${name}</span>
+                    <i class="fa-solid fa-circle-play" id="icon-${surahNum}"></i>
+                `;
+                item.onclick = () => playSurah(audioUrl, surahNum);
+                listContainer.appendChild(item);
+            });
+        }
+
+        let currentPlayingId = null;
+        function playSurah(url, id) {
+            const player = document.getElementById('quranPlayer');
+            
+            if (currentPlayingId === id && !player.paused) {
+                player.pause();
+                document.getElementById(`icon-${id}`).className = 'fa-solid fa-circle-play';
+                return;
+            }
+
+            if (currentPlayingId) {
+                const el = document.getElementById(`icon-${currentPlayingId}`);
+                if(el) el.className = 'fa-solid fa-circle-play';
+            }
+
+            player.src = url;
+            player.play();
+            currentPlayingId = id;
+            document.getElementById(`icon-${id}`).className = 'fa-solid fa-circle-pause';
+
+            player.onended = () => {
+                document.getElementById(`icon-${id}`).className = 'fa-solid fa-circle-play';
+            };
+        }
+
+        function renderDhikrList(elementId, dataset) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = "";
+
+            dataset.forEach((dhikr, idx) => {
+                const card = document.createElement('div');
+                card.className = 'dhikr-card';
+                let currentCount = dhikr.count;
+
+                card.innerHTML = `
+                    <div style="font-weight:bold; color:var(--primary); margin-bottom:5px;">${dhikr.text || ''}</div>
+                    <div class="dhikr-arabic">${dhikr.detail || dhikr.text}</div>
+                    <div class="dhikr-meaning">${dhikr.mean}</div>
+                    <div class="dhikr-counter" id="cnt-${elementId}-${idx}">ماوە: ${currentCount} جار</div>
+                `;
+
+                card.onclick = () => {
+                    if (currentCount > 0) {
+                        currentCount--;
+                        document.getElementById(`cnt-${elementId}-${idx}`).innerText = currentCount === 0 ? "تەواو بوو ✓" : `ماوە: ${currentCount} جار`;
+                        if(currentCount === 0) card.style.opacity = 0.4;
+                    }
+                };
+
+                container.appendChild(card);
+            });
+        }
+
+        function renderNzaList() {
+            const container = document.getElementById('nza-list');
+            nzakanList.forEach(nza => {
+                container.innerHTML += `
+                    <div class="card" style="text-align:center;">
+                        <div class="dhikr-arabic" style="color:var(--primary);">${nza.text}</div>
+                        <div class="dhikr-meaning">${nza.mean}</div>
+                    </div>
+                `;
+            });
+        }
+
+        let mainCounter = 0;
+        function incrementCounter() {
+            mainCounter++;
+            document.getElementById('counter-value').innerText = mainCounter;
+        }
+        function resetCounter() {
+            mainCounter = 0;
+            document.getElementById('counter-value').innerText = mainCounter;
+        }
+
+        function initQibla() {
+            const compass = document.getElementById('compass');
+            const status = document.getElementById('qibla-status');
+            const beep = document.getElementById('beepAudio');
+            let angle = 0;
+
+            compass.onclick = () => {
+                angle = (angle + 45) % 360;
+                compass.style.transform = `rotate(${angle}deg)`;
+                
+                if (angle === 180) {
+                    status.innerText = "قیبلە تەواو و ڕاستە! ✓";
+                    status.style.color = "green";
+                    beep.play();
+                } else {
+                    status.innerText = "تکایە بیسوڕێنە...";
+                    status.style.color = "red";
+                }
+            };
+        }
+
+        function renderFAQ() {
+            const container = document.getElementById('faq-list');
+            faqs.forEach((faq, idx) => {
+                const item = document.createElement('div');
+                item.className = 'faq-item';
+                item.innerHTML = `
+                    <div class="faq-question" onclick="toggleFaq(${idx})">
+                        <span>${faq.q}</span> <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq-ans-${idx}">${faq.a}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function toggleFaq(idx) {
+            const ans = document.getElementById(`faq-ans-${idx}`);
+            ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
