@@ -3,455 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ئەپی بانگ و قورئانی پیرۆز - Nexuim Official</title>
+    <title>پڕۆژەی قورئانی پیرۆز</title>
     <style>
         :root {
-            --bg-color: #0b1d1d;
-            --card-bg: #112a29;
-            --accent-gold: #e5b842;
-            --text-color: #ffffff;
-            --text-muted: #8eaba8;
-            --nav-bg: #071515;
-            --border-color: #1a3c39;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #10b981;
+            --text: #f8fafc;
+            --subtext: #94a3b8;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            height: 100vh;
-            background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .status-bar {
-            padding: 8px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            color: var(--text-color);
-        }
-
-        .content-area {
-            flex: 1;
-            overflow-y: auto;
+            color: var(--text);
             padding-bottom: 70px;
         }
 
-        .tab-content {
-            display: none;
-            padding: 16px;
+        header {
+            background-color: var(--card-bg);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .tab-content.active {
+        header h1 {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            overflow-x: auto;
+            background-color: #0b1120;
+            padding: 10px;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        nav button {
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid var(--accent);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        nav button.active {
+            background: var(--accent);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
             display: block;
         }
 
-        /* Header Time Section */
-        .time-header {
+        .card {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border-right: 4px solid var(--accent);
         }
 
-        .city-title {
-            color: var(--text-muted);
-            font-size: 16px;
+        .card h3 {
+            color: var(--accent);
             margin-bottom: 8px;
         }
 
-        .big-time {
-            font-size: 42px;
+        .arabic {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+
+        .meaning {
+            color: var(--subtext);
+            font-size: 0.95rem;
+        }
+
+        /* پژمێر Style */
+        .counter-box {
+            text-align: center;
+            padding: 30px 10px;
+        }
+
+        .counter-btn {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #000;
+            font-size: 2.5rem;
             font-weight: bold;
-            color: var(--text-color);
-            letter-spacing: 2px;
-        }
-
-        .date-info {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-top: 6px;
-        }
-
-        /* Prayer Times List */
-        .prayer-list {
+            border: none;
+            margin: 20px auto;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .reset-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* List Items Grid */
+        .grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 10px;
         }
 
-        .prayer-item {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 14px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid var(--border-color);
+        .grid-item {
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #334155;
         }
 
-        .prayer-name {
-            font-size: 18px;
-            font-weight: 500;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .prayer-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #334155;
         }
 
-        .prayer-time {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--accent-gold);
-        }
-
-        .audio-icon {
-            background-color: var(--accent-gold);
+        th {
+            background: var(--accent);
             color: #000;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        /* Settings Page */
-        .settings-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .settings-item {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-        }
-
-        .settings-item span {
-            font-size: 16px;
-        }
-
-        /* About & Contact Page Modal/View */
-        .page-view {
-            display: none;
-            padding: 16px;
-        }
-
-        .page-view.active {
-            display: block;
-        }
-
-        .about-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            margin-bottom: 20px;
-        }
-
-        .about-logo {
-            width: 80px;
-            height: 80px;
-            background-color: var(--accent-gold);
-            border-radius: 16px;
-            margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-        }
-
-        .about-title {
-            font-size: 22px;
-            color: var(--accent-gold);
-            margin-bottom: 4px;
-        }
-
-        .about-version {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
-        .about-text {
-            text-align: justify;
-            line-height: 1.8;
-            font-size: 15px;
-            color: #d1d5db;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 65px;
-            background-color: var(--nav-bg);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 11px;
-            cursor: pointer;
-            gap: 4px;
-        }
-
-        .nav-item.active {
-            color: var(--accent-gold);
-        }
-
-        .nav-item svg {
-            width: 22px;
-            height: 22px;
-            fill: currentColor;
-        }
-
-        .app-footer-brand {
-            text-align: center;
-            padding: 15px;
-            color: var(--accent-gold);
-            font-weight: bold;
-            font-size: 14px;
-            border-top: 1px solid var(--border-color);
-            margin-top: 20px;
-        }
-
-        .back-btn {
-            background: none;
-            border: none;
-            color: var(--accent-gold);
-            font-size: 18px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <!-- Status Bar -->
-    <div class="status-bar">
-        <span id="current-time">20:13</span>
-        <span> Nexuim </span>
-    </div>
+<header>
+    <h1>پڕۆژەی قورئانی پیرۆز و زیکرەکان</h1>
+</header>
 
-    <!-- Main Content Area -->
-    <div class="content-area">
-        <!-- Tab 1: Home (بانگ) -->
-        <div id="tab-home" class="tab-content active">
-            <div class="time-header">
-                <div class="city-title">کاتەکانی بانگ لە سلێمانی</div>
-                <div class="big-time">08:13:52</div>
-                <div class="date-info">2026-08-17  دووشەممە<br>٤ - ربیع الأول - ١٤٤٨</div>
-            </div>
+<nav>
+    <button class="tab-btn active" onclick="showSection('azkar-morning')">زیکری بەیانیان</button>
+    <button class="tab-btn" onclick="showSection('azkar-evening')">زیکری ئێواران</button>
+    <button class="tab-btn" onclick="showSection('azkar-sleep')">زیکری خەوتن</button>
+    <button class="tab-btn" onclick="showSection('counter')">پژمێر</button>
+    <button class="tab-btn" onclick="showSection('namaz')">کاتی بانگ (سلێمانی)</button>
+    <button class="tab-btn" onclick="showSection('quran-surahs')">سوڕەتەکان</button>
+    <button class="tab-btn" onclick="showSection('reciters')">مامۆستایانی قورئان</button>
+    <button class="tab-btn" onclick="showSection('tafsir')">مامۆستایانی تەفسیر</button>
+</nav>
 
-            <div class="prayer-list">
-                <div class="prayer-item">
-                    <span class="prayer-name">بەیانی</span>
-                    <div class="prayer-right">
-                        <span class="prayer-time">03:57</span>
-                        <div class="audio-icon">🔊</div>
-                    </div>
-                </div>
-                <div class="prayer-item">
-                    <span class="prayer-name">ڕۆژهەڵاتن</span>
-                    <div class="prayer-right">
-                        <span class="prayer-time">05:19</span>
-                    </div>
-                </div>
-                <div class="prayer-item">
-                    <span class="prayer-name">نیوەڕۆ</span>
-                    <div class="prayer-right">
-                        <span class="prayer-time">12:09</span>
-                        <div class="audio-icon">🔊</div>
-                    </div>
-                </div>
-                <div class="prayer-item">
-                    <span class="prayer-name">عەسر</span>
-                    <div class="prayer-right">
-                        <span class="prayer-time">03:46</span>
-                        <div class="audio-icon">🔊</div>
-                    </div>
-                </div>
-                <div class="prayer-item">
-                    <span class="prayer-name">ئێوارە</span>
-                    <div class="prayer-right">
-                        <span class="prayer-time">06:52</span>
-                        <div class="audio-icon">🔊</div>
-                    </div>
-                </div>
-                <div class="prayer-item">
-                    <span class="prayer-name">خەوتنان</span>
-                    <div class="prayer-right">
-                        <span class="prayer-time">08:09</span>
-                        <div class="audio-icon">🔊</div>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+
+    <!-- زیکری بەیانیان -->
+    <div id="azkar-morning" class="section active">
+        <h2>زیکەرەکانی بەیانیان</h2>
+        <br>
+        <div class="card">
+            <h3>١. آیة الکرسی — ١ جار</h3>
+            <p class="arabic">اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ...</p>
+            <p class="meaning">مانا: خوا هیچ پەرستراوێکی ڕاست نییە جگە لە ئەو، زیندوو و بەڕێوەبەری هەموو شتە...</p>
         </div>
-
-        <!-- Tab 2: Quran -->
-        <div id="tab-quran" class="tab-content">
-            <h2 style="margin-bottom: 15px; color: var(--accent-gold);">قورئانی پیرۆز</h2>
-            <div class="prayer-list">
-                <div class="prayer-item"><span>1. الفاتحة</span></div>
-                <div class="prayer-item"><span>2. البقرة</span></div>
-                <div class="prayer-item"><span>3. آل عمران</span></div>
-                <div class="prayer-item"><span>4. النساء</span></div>
-            </div>
+        <div class="card">
+            <h3>٢. سورەتی الإخلاص — ٣ جار</h3>
+            <p class="arabic">قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ</p>
+            <p class="meaning">مانا: بڵێ: ئەوە خوایەکی تاکە. خوا بێ‌نیازە و هەموو پێویستیان بە ئەوە...</p>
         </div>
-
-        <!-- Tab 3: Settings (ڕێکخستن) -->
-        <div id="tab-settings" class="tab-content">
-            <h2 style="margin-bottom: 15px; color: var(--accent-gold);">ڕێکخستن</h2>
-            <div class="settings-list">
-                <div class="settings-item">
-                    <span>گۆڕینی شار</span>
-                    <span>❮</span>
-                </div>
-                <div class="settings-item">
-                    <span>گۆڕینی دەنگ</span>
-                    <span>❮</span>
-                </div>
-                <div class="settings-item">
-                    <span>گۆڕینی زمان</span>
-                    <span>❮</span>
-                </div>
-                <div class="settings-item" onclick="showPage('page-about')">
-                    <span>لەبارەی ئێمە</span>
-                    <span>❮</span>
-                </div>
-                <!-- Contact via Direct Email -->
-                <a href="mailto:diarygamer87@gmail.com?subject=پەیوەندی%20لە%20ئەپی%20بانگ" class="settings-item">
-                    <span>پەیوەندیمان پێوە بکە</span>
-                    <span>✉️</span>
-                </a>
-                <div class="settings-item">
-                    <span>دەنگمان پێ بدە</span>
-                    <span>❮</span>
-                </div>
-            </div>
-
-            <!-- Footer Name Update -->
-            <div class="app-footer-brand">
-                Nexuim Official
-            </div>
+        <div class="card">
+            <h3>٣. سورەتی الفلق — ٣ جار</h3>
+            <p class="arabic">قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝...</p>
+            <p class="meaning">مانا: پەنا دەبەمە بەر پەروەردگاری بەیانی لە خراپی هەموو ئەوەی دروستی کردووە...</p>
         </div>
-
-        <!-- Inner Page: About Us (لەبارەی ئێمە) -->
-        <div id="page-about" class="page-view">
-            <button class="back-btn" onclick="hidePages()">❯ گەڕانەوە</button>
-            <div class="about-card">
-                <div class="about-logo">🕌</div>
-                <div class="about-title">بانگ - Bang</div>
-                <div class="about-version">Version 4.0.0</div>
-                <div class="about-text">
-                    ئەپی بانگ بۆ یەکەمجار لە ٢ ی ئابی ٢٠٢٦ کەوتبووە بەردەستی ئێوەی ئازیز کە کاتەکانی بانگدانتان پێشکەش دەکات بە ڕاست و دروستی کە هەمان ئەو کاتانەن کە لە مزگەوتەکاندا بەکاردێت و پەیڕەو دەکرێت.<br><br>
-                    ئەم کاتە ئه‌په‌ کوردییه‌کان بە پەنجەی دەست دەژمێردران و ئەم ئەپەی بانگ بە ماوەیەکی کەم پێشوازییەکی زۆر گەرمی لێکرا.
-                </div>
-            </div>
-            <div class="app-footer-brand">
-                Nexuim Official
-            </div>
+        <div class="card">
+            <h3>٤. سورەتی الناس — ٣ جار</h3>
+            <p class="arabic">قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝...</p>
+            <p class="meaning">مانا: پەنا دەبەمە بەر پەروەردگار و پادشای و پەرستراوی خەڵک...</p>
+        </div>
+        <div class="card">
+            <h3>٥. — ٣ جار</h3>
+            <p class="arabic">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ</p>
+            <p class="meaning">مانا: بە ناوی خوا؛ ئەوەی بە ناوی ئەو هیچ شتێک لە ز زەوی و ئاسمان زیانی پێ ناگەیەنێت...</p>
         </div>
     </div>
 
-    <!-- Bottom Navigation Bar -->
-    <div class="bottom-nav">
-        <div class="nav-item active" onclick="switchTab('tab-home', this)">
-            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            <span>سەرەتایی</span>
+    <!-- زیکری ئێواران -->
+    <div id="azkar-evening" class="section">
+        <h2>زیکەرەکانی ئێواران</h2>
+        <br>
+        <div class="card">
+            <h3>١. آیة الکرسی — ١ جار</h3>
+            <p class="arabic">اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...</p>
+            <p class="meaning">مانا: هیچ پەرستراوێکی ڕاست نییە جگە لە خوا، ئەو زیندوو و بەڕێوەبەری هەموو شتە...</p>
         </div>
-        <div class="nav-item" onclick="switchTab('tab-quran', this)">
-            <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-            <span>قورئان</span>
+        <div class="card">
+            <h3>٧. — ١ جار</h3>
+            <p class="arabic">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ...</p>
+            <p class="meaning">مانا: ئێمە چووینە ئێوارە و هەموو دەسەڵات بۆ خوایە...</p>
         </div>
-        <div class="nav-item" onclick="switchTab('tab-settings', this)">
-            <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-            <span>ڕێکخستن</span>
+        <div class="card">
+            <h3>١٣. — ٣ جار</h3>
+            <p class="arabic">أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ</p>
+            <p class="meaning">مانا: پەنا دەبەمە بەر وشە تەواوەکانی خوا لە خراپی هەموو ئەوەی دروستی کردووە.</p>
         </div>
     </div>
+
+    <!-- زیکری خەوتن -->
+    <div id="azkar-sleep" class="section">
+        <h2>زیکەرەکانی پێش خەوتن</h2>
+        <br>
+        <div class="card">
+            <h3>١. تسبيح، تحميد، تكبير</h3>
+            <p class="arabic">سُبْحَانَ اللَّهِ (٣٣) | الْحَمْدُ لِلَّهِ (٣٣) | اللَّهُ أَكْبَرُ (٣٤)</p>
+            <p class="meaning">پاکی و سوپاسگوزاری و گەورەیی بۆ پەروەردگار (کۆی گشتی ١٠٠ جار).</p>
+        </div>
+        <div class="card">
+            <h3>٢. — ١ جار</h3>
+            <p class="arabic">بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا</p>
+            <p class="meaning">مانا: بە ناوی تۆ ئەی خوا، دەمرم و دەژیم.</p>
+        </div>
+    </div>
+
+    <!-- پژمێر -->
+    <div id="counter" class="section">
+        <div class="counter-box">
+            <h2>پژمێری ئەلیکترۆنی</h2>
+            <button class="counter-btn" id="count-val" onclick="increaseCount()">0</button>
+            <br>
+            <button class="reset-btn" onclick="resetCount()">سڕینەوە / صفر</button>
+        </div>
+    </div>
+
+    <!-- کاتی بانگ -->
+    <div id="namaz" class="section">
+        <h2>کاتەکانی بانگ - سلێمانی</h2>
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>نوێژ</th>
+                    <th>کات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>بەیانی (الفجر)</td><td>04:15 AM</td></tr>
+                <tr><td>کەوتنی خۆر (الشروق)</td><td>05:40 AM</td></tr>
+                <tr><td>نیوەڕۆ (الظهر)</td><td>12:15 PM</td></tr>
+                <tr><td>عەسر (العصر)</td><td>03:50 PM</td></tr>
+                <tr><td>ئێوارە (المغرب)</td><td>06:50 PM</td></tr>
+                <tr><td>خەوتن (العشاء)</td><td>08:15 PM</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- سوڕەتەکانی قورئان -->
+    <div id="quran-surahs" class="section">
+        <h2>سورەتەکانی قورئانی پیرۆز (١١٤ سورەت)</h2>
+        <br>
+        <div class="grid-list" id="surahs-container"></div>
+    </div>
+
+    <!-- مامۆستایانی قورئان -->
+    <div id="reciters" class="section">
+        <h2>مامۆستایان و قاریەکانی قورئان</h2>
+        <br>
+        <div class="grid-list" id="reciters-container"></div>
+    </div>
+
+    <!-- تەفسیر -->
+    <div id="tafsir" class="section">
+        <h2>زانایان و مامۆستایانی تەفسیر</h2>
+        <br>
+        <div class="grid-list" id="tafsir-container"></div>
+    </div>
+
 </div>
 
 <script>
-    function switchTab(tabId, element) {
-        // Hide all page views first
-        hidePages();
-
-        // Hide all tab contents
-        const tabs = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => tab.classList.remove('active'));
-
-        // Remove active class from nav items
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => item.classList.remove('active'));
-
-        // Show selected tab and set nav item active
-        document.getElementById(tabId).classList.add('active');
-        element.classList.add('active');
-    }
-
-    function showPage(pageId) {
-        const tabs = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => tab.classList.remove('active'));
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         
-        document.getElementById(pageId).classList.add('active');
+        document.getElementById(id).classList.add('active');
+        event.target.classList.add('active');
     }
 
-    function hidePages() {
-        const pages = document.querySelectorAll('.page-view');
-        pages.forEach(page => page.classList.remove('active'));
-        document.getElementById('tab-settings').classList.add('active');
+    // پژمێر Logic
+    let count = 0;
+    function increaseCount() {
+        count++;
+        document.getElementById('count-val').innerText = count;
     }
+    function resetCount() {
+        count = 0;
+        document.getElementById('count-val').innerText = count;
+    }
+
+    // لیستەکان
+    const surahs = [
+        "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
+        "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
+        "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم",
+        "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر",
+        "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق",
+        "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة",
+        "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج",
+        "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس",
+        "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد",
+        "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات",
+        "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر",
+        "المسد", "الإخلاص", "الفلق", "الناس"
+    ];
+
+    const reciters = [
+        "عبد الباسط عبد الصمد", "محمد صديق المنشاوي", "محمود خليل الحصري", "مصطفى إسماعيل", "مشاري راشد العفاسي",
+        "سعد الغامدي", "ماهر المعيقلي", "عبد الرحمن السديس", "سعود الشريم", "یاسر الدوسري", "إسلام صبحي",
+        "رعد الكردي", "خالد الجليل", "فارس عباد", "أحمد بن علي العجمي", "إدريس أبكر", "ناصر القطامي"
+    ];
+
+    const tafsirScholars = [
+        "محمد بن جرير الطبري", "عبد الرحمن بن أبي حاتم", "عبد الله بن عباس", "مجاهد بن جبر", "قتادة بن دعامة",
+        "الحسن البصري", "ابن كثير الدمشقي", "القرطبي", "فخر الدين الرازي", "الزمخشري", "جلال الدين السيوطي",
+        "محمد الطاهر بن عاشور", "عبد الرحمن السعدي", "محمد متولي الشعراوي", "محمد بن صالح العثيمين"
+    ];
+
+    // پڕکردنەوەی ناوی سورەتەکان
+    const surahContainer = document.getElementById('surahs-container');
+    surahs.forEach((surah, index) => {
+        surahContainer.innerHTML += `<div class="grid-item">${index + 1}. ${surah}</div>`;
+    });
+
+    // پڕکردنەوەی ناوی مامۆستایان
+    const reciterContainer = document.getElementById('reciters-container');
+    reciters.forEach(reciter => {
+        reciterContainer.innerHTML += `<div class="grid-item">${reciter}</div>`;
+    });
+
+    // پڕکردنەوەی زانایانی تەفسیر
+    const tafsirContainer = document.getElementById('tafsir-container');
+    tafsirScholars.forEach(scholar => {
+        tafsirContainer.innerHTML += `<div class="grid-item">${scholar}</div>`;
+    });
 </script>
 
 </body>
